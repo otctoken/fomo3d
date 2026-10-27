@@ -1,0 +1,132 @@
+{
+  "checkedAt": "2026-10-27T02:40:29.101Z",
+  "network": "devnet",
+  "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+  "simulationOnly": true,
+  "checksEnabled": false,
+  "gasPaymentMocked": true,
+  "remainingBefore": "11000000000000",
+  "events": [
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::IcoContributed",
+      "data": {
+        "accepted_sui": "11000000000000",
+        "claims_id": "0x7f2ba7e0a2fba95573a16814d011eb8a231cc1c7ec703ddb2a2a70951f1c8393",
+        "entitlement_added": "2200000000000000000",
+        "game_id": "0x29174c3720606a1bb7d4fbf7b9647c933f21da0c1c42305d0a6867531f72b697",
+        "ico_id": "0x2e2676581329cf3aa2af371b76d470c202caabea8b1e70a2565e53d58d050119",
+        "participant": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "remaining_cap": "0",
+        "returned_sui": "0"
+      },
+      "bcs": "LiZ2WBMpzzqirzcbdtRwwgLKq+qLHnCiVl5T1Y0FARl/K6fgovupVXOhaBTQEeuKIxzBx+xwPdsqKnCVHxyDkykXTDcgYGobt9T797lkfJM/IdoMHEIwXQpoZ1MfcraXgiQvq+vD5uMxw9XG3j00/5ZWcbdRVOwcueAKpDe7+kQAsBcjAQoAAAAAAAAAAAAAAADcCVj4hx4AAAAAAAAAAA=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::VersionChanged",
+      "data": {
+        "new_version": "1",
+        "old_version": "0",
+        "registry_id": "0xf54df63b51b9226b370baf8bd22d8f25b0db578715bc08101f9a03556e420cab",
+        "source": 1
+      },
+      "bcs": "9U32O1G5Ims3C6+L0i2PJbDbV4cVvAgQH5oDVW5CDKsAAAAAAAAAAAEAAAAAAAAAAQ=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::MintProcessed",
+      "data": {
+        "actual_minted": "200000000000000000",
+        "circulating_supply_after": "200000000000000000",
+        "kind": 2,
+        "minted_coin_id": "0xa40e819f00311ea97291b0cc434ae24d42609c1c9a82f36f12260e6fd7573edd",
+        "minter_id": "0xcf8a3cdc6e2c1ddfe3ea8a7cc88f786d67c51c9bb708fc8932d0e84b134f754d",
+        "recipient": null,
+        "requested_amount": "200000000000000000",
+        "reward_divisor": null,
+        "total_burned": "0"
+      },
+      "bcs": "z4o83G4sHd/j6op8yI94bWfFHJu3CPyJMtDoSxNPdU0CAAAUu/CKxgIAABS78IrGAgABpA6BnwAxHqlykbDMQ0riTUJgnByagvNvEiYOb9dXPt0AAAAUu/CKxgIAAAAAAAAAAA=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolCreated<0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D,0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI>",
+      "data": {
+        "amount_x": "200000000000000000",
+        "amount_y": "1000000000000",
+        "creator": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "initial_lp_id": "0x458d274fa13276f7594da67b44e2069936ce98769634ec57a046d8cb51f11596",
+        "pool_id": "0x8931cec1b474bbdc11c6b4744fbbfbdc2ea03f94b8d6785e0caa428b24495b86",
+        "registry_id": "0x1661dc77fabc491e1ce1c82381963caf17206552b541cacbf41c04c2a0fba70f",
+        "total_shares": "1000000000000"
+      },
+      "bcs": "FmHcd/q8SR4c4cgjgZY8rxcgZVK1QcrL9BwEwqD7pw+JMc7BtHS73BHGtHRPu/vcLqA/lLjWeF4MqkKLJElbhkWNJ0+hMnb3WU2me0TiBpk2zph2ljTsV6BG2MtR8RWWgiQvq+vD5uMxw9XG3j00/5ZWcbdRVOwcueAKpDe7+kQAABS78IrGAgAQpdToAAAAABCl1OgAAAAAAAAAAAAAAA=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::IcoCompleted",
+      "data": {
+        "game_id": "0x29174c3720606a1bb7d4fbf7b9647c933f21da0c1c42305d0a6867531f72b697",
+        "ico_id": "0x2e2676581329cf3aa2af371b76d470c202caabea8b1e70a2565e53d58d050119",
+        "initial_lp_id": "0x458d274fa13276f7594da67b44e2069936ce98769634ec57a046d8cb51f11596",
+        "jackpot_after": "10000000000000",
+        "pool_registry_id": "0x1661dc77fabc491e1ce1c82381963caf17206552b541cacbf41c04c2a0fba70f",
+        "seed_fomo": "200000000000000000",
+        "seed_sui": "1000000000000",
+        "version_after": "1"
+      },
+      "bcs": "LiZ2WBMpzzqirzcbdtRwwgLKq+qLHnCiVl5T1Y0FARkpF0w3IGBqG7fU+/e5ZHyTPyHaDBxCMF0KaGdTH3K2lxZh3Hf6vEkeHOHII4GWPK8XIGVStUHKy/QcBMKg+6cPRY0nT6EydvdZTaZ7ROIGmTbOmHaWNOxXoEbYy1HxFZYAEKXU6AAAAAAAFLvwisYCAKByThgJAAABAAAAAAAAAA=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::MintProcessed",
+      "data": {
+        "actual_minted": "2200000000000000000",
+        "circulating_supply_after": "2400000000000000000",
+        "kind": 1,
+        "minted_coin_id": null,
+        "minter_id": "0xcf8a3cdc6e2c1ddfe3ea8a7cc88f786d67c51c9bb708fc8932d0e84b134f754d",
+        "recipient": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "requested_amount": "2200000000000000000",
+        "reward_divisor": null,
+        "total_burned": "0"
+      },
+      "bcs": "z4o83G4sHd/j6op8yI94bWfFHJu3CPyJMtDoSxNPdU0BAADcCVj4hx4AANwJWPiHHgGCJC+r68Pm4zHD1cbePTT/llZxt1FU7By54AqkN7v6RAAAAADwxEiDTiEAAAAAAAAAAA=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::IcoClaimProcessed",
+      "data": {
+        "claims_id": "0x7f2ba7e0a2fba95573a16814d011eb8a231cc1c7ec703ddb2a2a70951f1c8393",
+        "entitlement_removed": "2200000000000000000",
+        "ico_id": "0x2e2676581329cf3aa2af371b76d470c202caabea8b1e70a2565e53d58d050119",
+        "minter_id": "0xcf8a3cdc6e2c1ddfe3ea8a7cc88f786d67c51c9bb708fc8932d0e84b134f754d",
+        "participant": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44"
+      },
+      "bcs": "LiZ2WBMpzzqirzcbdtRwwgLKq+qLHnCiVl5T1Y0FARl/K6fgovupVXOhaBTQEeuKIxzBx+xwPdsqKnCVHxyDk8+KPNxuLB3f4+qKfMiPeG1nxRybtwj8iTLQ6EsTT3VNgiQvq+vD5uMxw9XG3j00/5ZWcbdRVOwcueAKpDe7+kQAANwJWPiHHg=="
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::MintProcessed",
+      "data": {
+        "actual_minted": "10000000000000",
+        "circulating_supply_after": "2400010000000000000",
+        "kind": 0,
+        "minted_coin_id": null,
+        "minter_id": "0xcf8a3cdc6e2c1ddfe3ea8a7cc88f786d67c51c9bb708fc8932d0e84b134f754d",
+        "recipient": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "requested_amount": "10000000000000",
+        "reward_divisor": "1",
+        "total_burned": "0"
+      },
+      "bcs": "z4o83G4sHd/j6op8yI94bWfFHJu3CPyJMtDoSxNPdU0AAKByThgJAAAAoHJOGAkAAAGCJC+r68Pm4zHD1cbePTT/llZxt1FU7By54AqkN7v6RAABAQAAAAAAAAAAoGITYYxOIQAAAAAAAAAA"
+    },
+    {
+      "type": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::KeyPurchased<0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI>",
+      "data": {
+        "buyer": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "game_id": "0x29174c3720606a1bb7d4fbf7b9647c933f21da0c1c42305d0a6867531f72b697",
+        "jackpot_after": "10002000000000",
+        "key_number": "1",
+        "maturity_ms": "1793068887386",
+        "paid_amount": "2000000000",
+        "round_id": "1",
+        "timestamp_ms": "1793068827386"
+      },
+      "bcs": "KRdMNyBgahu31Pv3uWR8kz8h2gwcQjBdCmhnUx9ytpcBAAAAAAAAAIIkL6vrw+bjMcPVxt49NP+WVnG3UVTsHLngCqQ3u/pEAQAAAAAAAAAAlDV3AAAAAAA0qMUYCQAAWu07e6EBAAD6Ajt7oQEAAA=="
+    }
+  ]
+}

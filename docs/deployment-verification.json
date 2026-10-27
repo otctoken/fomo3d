@@ -1,0 +1,1506 @@
+{
+  "checkedAt": "2026-10-27T02:36:14.553Z",
+  "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+  "network": "devnet",
+  "functions": {
+    "game::join_ico": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "join_ico",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Ico",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::GetIcoCoin",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "game::refund_ico": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "refund_ico",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Ico",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::GetIcoCoin",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "game::get_fomo3d": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "get_fomo3d",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Ico",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::GetIcoCoin",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::play_games": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "play_games",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Halving_cycle",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::open_award_sui": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "open_award_sui",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D",
+                    "typeParameters": []
+                  }
+                },
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::open_award_meme": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "open_award_meme",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D",
+                    "typeParameters": []
+                  }
+                },
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::open_award_fomo3d": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "open_award_fomo3d",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::FomoData",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D",
+                    "typeParameters": []
+                  }
+                },
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::Minter",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::init_FomoData": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "init_FomoData",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u8"
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::admin_init_FomoData": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "admin_init_FomoData",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::AdminCap",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u8"
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "game::init_FomoData_fomo3d": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "game",
+      "name": "init_FomoData_fomo3d",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [],
+      "parameters": [
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::AdminCap",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::Registry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "datatype",
+                  "datatype": {
+                    "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D",
+                    "typeParameters": []
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u8"
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": []
+    },
+    "swap::swap_x_to_y": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "swap",
+      "name": "swap_x_to_y",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        },
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "swap::swap_y_to_x": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "swap",
+      "name": "swap_y_to_x",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        },
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "swap::add_liquidity": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "swap",
+      "name": "add_liquidity",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        },
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u128"
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::LP",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "swap::remove_liquidity": {
+      "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+      "moduleName": "swap",
+      "name": "remove_liquidity",
+      "visibility": "public",
+      "isEntry": false,
+      "typeParameters": [
+        {
+          "isPhantom": false,
+          "constraints": []
+        },
+        {
+          "isPhantom": false,
+          "constraints": []
+        }
+      ],
+      "parameters": [
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::Pool",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::LP",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                },
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "u64"
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistry",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "immutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::clock::Clock",
+              "typeParameters": []
+            }
+          }
+        },
+        {
+          "reference": "mutable",
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::tx_context::TxContext",
+              "typeParameters": []
+            }
+          }
+        }
+      ],
+      "returns": [
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "reference": null,
+          "body": {
+            "$kind": "datatype",
+            "datatype": {
+              "typeName": "0x0000000000000000000000000000000000000000000000000000000000000002::coin::Coin",
+              "typeParameters": [
+                {
+                  "$kind": "typeParameter",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "initialization": {
+    "ProtocolInitialized": [
+      {
+        "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+        "module": "game",
+        "sender": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "eventType": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::ProtocolInitialized",
+        "bcs": "9U32O1G5Ims3C6+L0i2PJbDbV4cVvAgQH5oDVW5CDKsuJnZYEynPOqKvNxt21HDCAsqr6osecKJWXlPVjQUBGX8rp+Ci+6lVc6FoFNAR64ojHMHH7HA92yoqcJUfHIOTgiQvq+vD5uMxw9XG3j00/5ZWcbdRVOwcueAKpDe7+kQAAAAAAAAAAACwFyMBCgAA",
+        "json": {
+          "admin": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+          "claims_id": "0x7f2ba7e0a2fba95573a16814d011eb8a231cc1c7ec703ddb2a2a70951f1c8393",
+          "ico_id": "0x2e2676581329cf3aa2af371b76d470c202caabea8b1e70a2565e53d58d050119",
+          "ico_remaining": "11000000000000",
+          "registry_id": "0xf54df63b51b9226b370baf8bd22d8f25b0db578715bc08101f9a03556e420cab",
+          "version": "0"
+        },
+        "checkpoint": "129769",
+        "transactionDigest": "BfmyD7ifRAf6xyHbRJfcsQSo4VwqLFqPfkMLbbJSU5Sn",
+        "eventIndex": 2
+      }
+    ],
+    "TokenInitialized": [
+      {
+        "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+        "module": "fomo3d",
+        "sender": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "eventType": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::TokenInitialized",
+        "bcs": "z4o83G4sHd/j6op8yI94bWfFHJu3CPyJMtDoSxNPdU26qbP1LA0PS6buPMwX49G5hyzr3fwZWqTOyJZW78A1eh2qa1vn1jYJ85QyCj3O7r3zcvohr9eHbrixZMqA5AngCQAA6IkEI8eK",
+        "json": {
+          "configured_supply_cap": "10000000000000000000",
+          "decimals": 9,
+          "halving_cycle_id": "0xbaa9b3f52c0d0f4ba6ee3ccc17e3d1b9872cebddfc195aa4cec89656efc0357a",
+          "metadata_id": "0x1daa6b5be7d63609f394320a3dceeebdf372fa21afd7876eb8b164ca80e409e0",
+          "minter_id": "0xcf8a3cdc6e2c1ddfe3ea8a7cc88f786d67c51c9bb708fc8932d0e84b134f754d"
+        },
+        "checkpoint": "129769",
+        "transactionDigest": "BfmyD7ifRAf6xyHbRJfcsQSo4VwqLFqPfkMLbbJSU5Sn",
+        "eventIndex": 0
+      }
+    ],
+    "PoolRegistryCreated": [
+      {
+        "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+        "module": "swap",
+        "sender": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "eventType": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::swap::PoolRegistryCreated",
+        "bcs": "FmHcd/q8SR4c4cgjgZY8rxcgZVK1QcrL9BwEwqD7pw+CJC+r68Pm4zHD1cbePTT/llZxt1FU7By54AqkN7v6RA==",
+        "json": {
+          "admin": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+          "registry_id": "0x1661dc77fabc491e1ce1c82381963caf17206552b541cacbf41c04c2a0fba70f"
+        },
+        "checkpoint": "129769",
+        "transactionDigest": "BfmyD7ifRAf6xyHbRJfcsQSo4VwqLFqPfkMLbbJSU5Sn",
+        "eventIndex": 1
+      }
+    ],
+    "GameCreated": [
+      {
+        "packageId": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305",
+        "module": "game",
+        "sender": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+        "eventType": "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::game::GameCreated<0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI>",
+        "bcs": "KRdMNyBgahu31Pv3uWR8kz8h2gwcQjBdCmhnUx9ytpf1TfY7UbkiazcLr4vSLY8lsNtXhxW8CBAfmgNVbkIMq4IkL6vrw+bjMcPVxt49NP+WVnG3UVTsHLngCqQ3u/pEAAABAAAAAAAAAGDqAAAAAAAAAJQ1dwAAAAACAAAAAAAAAAA=",
+        "json": {
+          "countdown_ms": "60000",
+          "creator": "0x82242fabebc3e6e331c3d5c6de3d34ff965671b75154ec1cb9e00aa437bbfa44",
+          "game_id": "0x29174c3720606a1bb7d4fbf7b9647c933f21da0c1c42305d0a6867531f72b697",
+          "initial_balance": "0",
+          "initial_lp_id": null,
+          "initial_price": "2000000000",
+          "mode": 0,
+          "price_update_percentage": 2,
+          "registry_id": "0xf54df63b51b9226b370baf8bd22d8f25b0db578715bc08101f9a03556e420cab",
+          "round_id": "1"
+        },
+        "checkpoint": "136673",
+        "transactionDigest": "GPunVZUHY1cMfXUZZ3FZAbGpzC1ZgLKJXa4RMJaS4ro5",
+        "eventIndex": 1
+      }
+    ]
+  }
+}
