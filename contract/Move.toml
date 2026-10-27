@@ -1,0 +1,9 @@
+[package]
+name = "fomo"
+edition = "2024"
+
+
+[dependencies]
+
+
+
