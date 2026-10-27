@@ -198,7 +198,7 @@ module fomo::game{
 
 
 
-    public fun admin_init_FomoData<T>(_:&AdminCap,r:&mut Registry,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  //我们countdown为60000毫秒,initial_price   2SUI,pup 千分之2
+    public fun admin_init_FomoData<T>(_:&AdminCap,r:&mut Registry,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  
         let coin_type = type_name::with_defining_ids<T>();
         assert!(countdown >= 10000 && countdown <= 28800000,ECountdown);
         assert!(!df::exists(&r.id,coin_type),ESameTypeName);
@@ -233,7 +233,7 @@ module fomo::game{
 
 
 //...................................................main.................................................
-    public fun init_FomoData<T>(r:&mut Registry,registry:&mut PoolRegistry,initcoin:Coin<T>,tcoin:Coin<T>,suicoin:Coin<SUI>,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  //我们countdown为60000毫秒,initial_price   2SUI,pup 千分之2
+    public fun init_FomoData<T>(r:&mut Registry,registry:&mut PoolRegistry,initcoin:Coin<T>,tcoin:Coin<T>,suicoin:Coin<SUI>,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  
         let coin_type = type_name::with_defining_ids<T>();
         assert!(countdown >= 10000 && countdown <= 28800000,ECountdown);
         assert!(!df::exists(&r.id,coin_type),ESameTypeName);
@@ -272,7 +272,7 @@ module fomo::game{
         });
         transfer::share_object(data);
     }
-    public fun init_FomoData_fomo3d(_:&AdminCap,r:&mut Registry,registry:&mut PoolRegistry,initcoin:Coin<FOMO3D>,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  //我们countdown为60000毫秒,initial_price   2SUI,pup 千分之2
+    public fun init_FomoData_fomo3d(_:&AdminCap,r:&mut Registry,registry:&mut PoolRegistry,initcoin:Coin<FOMO3D>,countdown:u64,initial_price:u64,pup:u8,ctx:&mut TxContext){  
         let coin_type = type_name::with_defining_ids<FOMO3D>();
         assert!(countdown >= 10000 && countdown <= 28800000,ECountdown);
         assert!(!df::exists(&r.id,coin_type),ESameTypeName);
@@ -344,8 +344,7 @@ module fomo::game{
         let amount = balance::value(&fomo.balance);
         let winner =((amount as u128) * 65 / 100) as u64;
         let buyback =((amount as u128) * 5 / 100) as u64;
-        // 剩余给回购储备，约 5%
-        // 下一轮奖池 30%
+
         let winnerCoin = coin::from_balance(balance::split(&mut fomo.balance, winner), ctx);
         transfer::public_transfer(winnerCoin,fomo.address1);
         let reserved = fomo.balance.split(buyback);
@@ -354,10 +353,10 @@ module fomo::game{
         let bought = try_buyback_sui(fomo, pool, clk, ctx);
         let event_bought = bought.value();
         if (bought.value() == 0) {
-            // 本次没有执行兑换，预算仍在 pending_buyback。
+ 
             coin::destroy_zero(bought);
         } else {
-            // 实际买到的 FOMO3D 才执行销毁。
+
             fomo3d::burn(minter, bought);
             emit(BuybackExecuted<SUI> {
                 game_id: object::id(fomo), trigger_round_id: event_round,
@@ -395,9 +394,7 @@ module fomo::game{
             let winner = ((amount as u128) * 65 / 100) as u64;
             let buyback = ((amount as u128) * 2 / 100) as u64;
             let burn_meme = ((amount as u128) * 3 / 100) as u64;
-            // 剩余协议给回购储备，约 2%
-            // 销毁meme，约 3%
-            // 下一轮奖池 30%
+
             let winnerCoin = coin::from_balance(balance::split(&mut fomo.balance, winner), ctx);
             let burnCoin = coin::from_balance(balance::split(&mut fomo.balance, burn_meme), ctx);
             transfer::public_transfer(winnerCoin,fomo.address1);
@@ -447,9 +444,7 @@ module fomo::game{
             let amount = balance::value(&fomo.balance);
             let winner = ((amount as u128) * 65 / 100) as u64;
             let burn_meme = ((amount as u128) * 5 / 100) as u64;
-            // 剩余协议给回购储备，约 2%
-            // 销毁meme，约 3%
-            // 下一轮奖池 30%
+
             let winnerCoin = coin::from_balance(balance::split(&mut fomo.balance, winner), ctx);
             let burnCoin = coin::from_balance(balance::split(&mut fomo.balance, burn_meme), ctx);
             transfer::public_transfer(winnerCoin,fomo.address1);
@@ -568,19 +563,19 @@ module fomo::game{
     }
 
     public fun finalize_and_destroy_ico(ico: Ico, getico:GetIcoCoin,ctx: &mut TxContext) {
-        // 这里确保只有当下线（boo == false）且额度满（hardCap == 0）时才能销毁
+
         assert!(!ico.boo && ico.hardCap == 0, 0); 
         assert!(sui::table::is_empty(&getico.get), 1);
 
-    // 确认空了之后，安全解构并销毁
+
         let event_ico_id = object::id(&ico);
         let event_claims_id = object::id(&getico);
         let GetIcoCoin { id, get } = getico;
         sui::table::destroy_empty(get);
         sui::object::delete(id);
         
-        // 此时 ico 是按值传递的（拥有所有权），可以安全地解构并删除
-        let Ico { id, .. } = ico; // 使用 .. 忽略其余你没有列出的字段
+ 
+        let Ico { id, .. } = ico; 
         sui::object::delete(id);
         emit(IcoFinalized { ico_id: event_ico_id, claims_id: event_claims_id, caller: ctx.sender() });
     }
@@ -595,7 +590,7 @@ module fomo::game{
     ): Coin<FOMO3D> {
         let amount = fomo.pending_buyback.value();
 
-        // 无预算或首跳受时间限制：不取出资金。
+   
         if (amount == 0 || !swap::can_swap_now(pool, clk)) {
             emit(BuybackSkipped<T> {
                 game_id: object::id(fomo), trigger_round_id: fomo.round_id,
@@ -616,11 +611,11 @@ module fomo::game{
             return coin::zero<FOMO3D>(ctx)
         };
 
-        // 必须按当前 swap 的实际扣费规则计算净输出。
+
         let fee = ((gross as u128) * 15 / 1000) as u64;
         let net_sui = gross - fee * 2;
 
-        // 第二跳：SUI -> FOMO3D。
+
         let (fx, fy, _) = swap::reserves(pool_fomo);
         let out_fomo = swap::quote_or_zero(net_sui, fy, fx);
 
@@ -632,7 +627,7 @@ module fomo::game{
             return coin::zero<FOMO3D>(ctx)
         };
 
-        // 两跳都可执行，现在才取出回购资金。
+
         let input = coin::from_balance(
             fomo.pending_buyback.split(amount),
             ctx,
@@ -642,7 +637,7 @@ module fomo::game{
             pool, input, net_sui, registry, clk, ctx,
         );
 
-        // 沿用当前第二跳包内接口的时间检查语义。
+
         swap::swap_y_to_x_package<FOMO3D, SUI>(
             pool_fomo, sui_coin, out_fomo, clk, ctx,
         )
@@ -654,10 +649,10 @@ module fomo::game{
         clk: &Clock,
         ctx: &mut TxContext,
     ): Coin<FOMO3D> {
-        // 包括以前未执行的预算，以及本轮新增的预算。
+
         let amount = fomo.pending_buyback.value();
 
-        // 不取走预算，不修改池，返回零金额 Coin。
+
         if (amount == 0 || !swap::can_swap_now(pool, clk)) {
             emit(BuybackSkipped<SUI> {
                 game_id: object::id(fomo), trigger_round_id: fomo.round_id,
@@ -668,8 +663,7 @@ module fomo::game{
 
         let (reserve_x, reserve_y, _) = swap::reserves(pool);
 
-        // 池类型是 Pool<FOMO3D, SUI>。
-        // 输入 SUI，所以输入储备是 reserve_y，输出储备是 reserve_x。
+
         let out = swap::quote_or_zero(
             amount,
             reserve_y,
@@ -684,7 +678,7 @@ module fomo::game{
             return coin::zero<FOMO3D>(ctx)
         };
 
-        // 确认能够兑换后，才真正取出预算。
+
         let input = coin::from_balance(
             fomo.pending_buyback.split(amount),
             ctx,
