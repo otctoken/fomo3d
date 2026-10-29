@@ -39,6 +39,7 @@ export function pagePlan(
   search: string,
   catalog: Catalog,
   address?: string,
+  fomoType?: string,
 ) {
   const params = new URLSearchParams(search);
   const tab = params.get("tab") || "swap";
@@ -82,14 +83,17 @@ export function pagePlan(
       : 1;
     games = matches.slice((page - 1) * GAME_PAGE_SIZE, page * GAME_PAGE_SIZE);
   }
-  const selectedPool = market
-    ? catalog.pools.find((p) => p.id === params.get("pool")) ||
-      (path === "/swap"
-        ? catalog.pools.find((p) => !p.coinType.endsWith("::fomo3d::FOMO3D"))
-        : undefined) ||
-      catalog.pools.find((p) => p.coinType.includes("::fomo3d::FOMO3D")) ||
-      catalog.pools[0]
-    : undefined;
+  const isFomo = (pool: PoolEntry) =>
+    fomoType
+      ? pool.coinType === fomoType
+      : pool.coinType.endsWith("::fomo3d::FOMO3D");
+  const selectedPool = !market
+    ? undefined
+    : path === "/fomo"
+      ? catalog.pools.find(isFomo)
+      : catalog.pools.find((p) => p.id === params.get("pool")) ||
+        catalog.pools.find((p) => !isFomo(p)) ||
+        catalog.pools[0];
   const suiDetail = detail && games.some((g) => g.coinType === SUI);
   return {
     games,

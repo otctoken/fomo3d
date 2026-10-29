@@ -114,7 +114,7 @@ export function SwapPage() {
           </button>
         ))}
       </div>
-      <Market liquidity={tab === "liquidity"} />
+      <Market liquidity={tab === "liquidity"} selectable />
     </>
   );
 }
@@ -195,11 +195,17 @@ function TokenOverview() {
     </>
   );
 }
-function Market({ liquidity }: { liquidity: boolean }) {
+function Market({
+  liquidity,
+  selectable = false,
+}: {
+  liquidity: boolean;
+  selectable?: boolean;
+}) {
   const p = useProtocol();
   return (
     <>
-      <PoolPicker key={p.config.network} />
+      {selectable && <PoolPicker key={p.config.network} />}
       <MarketForm
         key={`${p.config.network}:${p.plan.pools[0]?.id}:${liquidity}`}
         liquidity={liquidity}

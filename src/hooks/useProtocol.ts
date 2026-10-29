@@ -59,6 +59,7 @@ function useProtocolState() {
     location.search,
     { games: [], pools: [] },
     account?.address,
+    c.fomoType,
   );
   const historyEnabled =
     !!c.packageId &&
@@ -79,6 +80,7 @@ function useProtocolState() {
     location.search,
     catalog,
     account?.address,
+    c.fomoType,
   );
   const icoFinalized =
     history.data?.events.some(

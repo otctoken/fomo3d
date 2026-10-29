@@ -68,7 +68,7 @@ describe("page-specific RPC scope with a large directory", () => {
   });
   it("loads only the selected market pool, then changes scope when selection changes", () => {
     for (const id of ["pool-24", "pool-881"]) {
-      const p = pagePlan("/fomo", `?tab=liquidity&pool=${id}`, catalog);
+      const p = pagePlan("/swap", `?tab=liquidity&pool=${id}`, catalog);
       expect(p.pools.map((v) => v.id)).toEqual([id]);
       expect(p.games).toEqual([]);
       expect([p.clock, p.ico, p.minter, p.halving]).toEqual([
@@ -79,6 +79,35 @@ describe("page-specific RPC scope with a large directory", () => {
       ]);
     }
     expect(pagePlan("/fomo", "", catalog).pools[0].id).toBe("fomo-pool");
+  });
+  it("locks FOMO trading to its configured token even with another pool in the URL", () => {
+    const fomoType = catalog.pools[0].coinType;
+    for (const tab of ["swap", "liquidity"]) {
+      expect(
+        pagePlan(
+          "/fomo",
+          `?tab=${tab}&pool=pool-24`,
+          catalog,
+          undefined,
+          fomoType,
+        ).pools.map((p) => p.id),
+      ).toEqual(["fomo-pool"]);
+      expect(
+        pagePlan(
+          "/fomo",
+          `?tab=${tab}`,
+          {
+            games: [],
+            pools: [
+              catalog.pools[1],
+              { id: "lookalike", coinType: "0x99::fomo3d::FOMO3D" },
+            ],
+          },
+          undefined,
+          fomoType,
+        ).pools,
+      ).toEqual([]);
+    }
   });
   it("stops pool queries when moving from market to token or claim tabs", () => {
     const token = pagePlan("/fomo", "?tab=token&pool=pool-24", catalog);
