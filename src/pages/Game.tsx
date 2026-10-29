@@ -262,8 +262,8 @@ export function GamePage() {
           {p.data?.registry?.version !== "1" && (
             <p className="warning">
               {t(
-                "Buying opens only after the protocol reaches version 1.",
-                "协议版本为 1 后才开放购买。",
+                "Trading automatically opens once the ICO is complete.",
+                "ICO完成后自动开放购买。",
               )}
             </p>
           )}
