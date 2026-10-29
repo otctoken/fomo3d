@@ -4,15 +4,32 @@ import { coinLogoUrl } from "../lib/coinLogos";
 export function TokenIcon({
   type,
   size = "",
+  fallback = true,
 }: {
   type: string;
   size?: string;
+  fallback?: boolean;
 }) {
   const url = coinLogoUrl(type);
-  return <LogoImage key={`${type}:${url || ""}`} url={url} size={size} />;
+  return (
+    <LogoImage
+      key={`${type}:${url || ""}`}
+      url={url}
+      size={size}
+      fallback={fallback}
+    />
+  );
 }
 
-function LogoImage({ url, size }: { url?: string; size: string }) {
+function LogoImage({
+  url,
+  size,
+  fallback,
+}: {
+  url?: string;
+  size: string;
+  fallback: boolean;
+}) {
   const [state, setState] = useState<"loading" | "loaded" | "failed">(
     "loading",
   );
@@ -21,9 +38,14 @@ function LogoImage({ url, size }: { url?: string; size: string }) {
     const timer = setTimeout(() => setState("failed"), 10000);
     return () => clearTimeout(timer);
   }, [url, state]);
+  if (!fallback && (!url || state === "failed")) return null;
   return (
-    <span className={`token-icon ${size}`} aria-hidden="true">
-      {(!url || state !== "loaded") && "◈"}
+    <span
+      className={`token-icon ${size}`}
+      aria-hidden="true"
+      style={!fallback && state !== "loaded" ? { display: "none" } : undefined}
+    >
+      {fallback && (!url || state !== "loaded") && "◈"}
       {url && state !== "failed" && (
         <img
           src={url}

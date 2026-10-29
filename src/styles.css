@@ -1330,6 +1330,20 @@ footer {
 .market-layout aside h2 {
   margin: 10px 0 26px;
 }
+.pool-token-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pool-token-title .token-icon {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+}
+.pool-token-title > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .lp-position {
   border-top: 1px solid #283242;
   margin-top: 20px;

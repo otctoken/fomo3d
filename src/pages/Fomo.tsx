@@ -15,6 +15,7 @@ import {
   PageTitle,
   Field,
   TokenAmount,
+  TokenIcon,
   Balance,
   Stat,
   Empty,
@@ -519,7 +520,10 @@ function MarketForm({ liquidity }: { liquidity: boolean }) {
           <aside>
             <section className="panel">
               <p className="eyebrow">{t("POOL ANALYTICS", "交易池数据")}</p>
-              <h2>{meta.data?.symbol || "TOKEN"} / SUI</h2>
+              <h2 className="pool-token-title">
+                <TokenIcon type={pool.coinType} fallback={false} />
+                <span>{meta.data?.symbol || "TOKEN"} / SUI</span>
+              </h2>
               <div className="summary-row">
                 <span>{t("Token reserve", "代币储备")}</span>
                 <strong>
