@@ -37,6 +37,11 @@ export function formatAmount(
 export function keyPrice(keys: bigint, initial: bigint, pup: bigint) {
   return u64(initial + keys * ((initial * pup) / 1000n));
 }
+export function formatTokenPrice(amount: bigint, decimals: number) {
+  const unit = 10n ** BigInt(decimals);
+  const cents = (amount * 100n + unit / 2n) / unit;
+  return `${cents / 100n}.${(cents % 100n).toString().padStart(2, "0")}`;
+}
 export function keyReward(
   price: bigint,
   supply: bigint,

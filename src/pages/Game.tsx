@@ -19,6 +19,7 @@ import {
   keyPrice,
   keyReward,
   formatAmount,
+  formatTokenPrice,
   gameStatus,
   holderAddress,
 } from "../lib/sui/math";
@@ -261,6 +262,9 @@ export function GamePage() {
             className="button primary full"
             disabled={
               !account ||
+              (state !== "Settlement Available" &&
+                game.coinType !== SUI &&
+                !meta.data) ||
               tx.busy ||
               chainTime.stale ||
               p.data?.registry?.version !== "1" ||
@@ -280,7 +284,7 @@ export function GamePage() {
                     }
                   : {
                       label: t("Buy one key", "购买一把 Key"),
-                      details: `${price} raw ${meta.data?.symbol || "token"} · ${t("Exact price; refresh required if it changes.", "精确价格，变化时需刷新。")}`,
+                      details: `${formatTokenPrice(price, meta.data?.decimals ?? 9)} ${meta.data?.symbol || "SUI"} · ${t("Price changes require a refresh.", "价格变化时需刷新。")}`,
                       build: (c) => buyKey(c, game.id, game.coinType, price),
                     },
               )

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   parseAmount,
   formatAmount,
+  formatTokenPrice,
   keyPrice,
   keyReward,
   quote,
@@ -14,6 +15,13 @@ import {
   U64_MAX,
 } from "../src/lib/sui/math";
 describe("Exact contract arithmetic", () => {
+  it("formats confirmation prices with token decimals and exactly two rounded decimal places", () => {
+    expect(formatTokenPrice(2008000000n, 9)).toBe("2.01");
+    expect(formatTokenPrice(2000000000n, 9)).toBe("2.00");
+    expect(formatTokenPrice(2008000n, 6)).toBe("2.01");
+    expect(formatTokenPrice(9995000000n, 9)).toBe("10.00");
+    expect(formatTokenPrice(U64_MAX, 0)).toBe("18446744073709551615.00");
+  });
   it("round trips the u64 maximum without a Number conversion", () => {
     expect(parseAmount("18446744073.709551615")).toBe(U64_MAX);
     expect(formatAmount(U64_MAX, 9, 9)).toBe("18,446,744,073.709551615");
