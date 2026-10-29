@@ -126,16 +126,8 @@ pre {
 svg {
   flex-shrink: 0;
 }
-.network-banner {
-  text-align: center;
-  font-size: 10px;
-  letter-spacing: 1.3px;
-  color: #a0a6ba;
-  background: #111520;
-  border-bottom: 1px solid #1e2430;
-  padding: 8px 16px;
-}
 .site-header {
+  position: relative;
   max-width: 1440px;
   margin: auto;
   padding: 24px 40px;
@@ -205,13 +197,6 @@ svg {
 }
 .language {
   font-size: 11px;
-}
-.network-select {
-  font-size: 11px;
-  padding: 8px;
-  width: auto;
-  border-color: #2a303c;
-  text-transform: capitalize;
 }
 .mobile-menu {
   display: none;
@@ -1507,9 +1492,6 @@ td {
   .language span {
     display: none;
   }
-  .network-select {
-    max-width: 83px;
-  }
   .hero-grid {
     grid-template-columns: 1.7fr 1fr;
   }
@@ -1532,7 +1514,7 @@ td {
     display: none;
     left: 20px;
     right: 20px;
-    top: 105px;
+    top: calc(100% + 4px);
     padding: 22px;
     background: #141b28;
     z-index: 20;
@@ -1615,11 +1597,6 @@ td {
   }
   .header-actions {
     gap: 5px;
-  }
-  .network-select {
-    padding: 7px;
-    font-size: 10px;
-    max-width: 75px;
   }
   .language {
     padding: 4px;
@@ -1852,10 +1829,6 @@ td {
   .site-header {
     padding: 17px 15px;
   }
-  .network-select {
-    max-width: 66px;
-    font-size: 9px;
-  }
   .brand {
     font-size: 20px;
   }
@@ -1903,10 +1876,6 @@ td {
   .prose {
     padding: 23px;
   }
-  .network-banner {
-    font-size: 8px;
-    letter-spacing: 0.8px;
-  }
   .token-overview {
     flex-direction: column;
     align-items: flex-start;
@@ -1943,11 +1912,8 @@ td {
   .language span {
     display: inline;
   }
-  .network-select {
-    max-width: none;
-  }
   .main-nav {
-    top: 165px;
+    top: calc(100% + 4px);
   }
   .brand .fomo-logo {
     width: 34px;
@@ -2396,7 +2362,7 @@ ul.doc-list {
     display: none;
     left: 20px;
     right: 20px;
-    top: 105px;
+    top: calc(100% + 4px);
     padding: 22px;
     background: #141b28;
     z-index: 20;
@@ -2625,14 +2591,11 @@ ul.doc-list {
 }
 @media (max-width: 480px) {
   .main-nav {
-    top: 165px;
+    top: calc(100% + 4px);
   }
   .header-actions {
     width: 100%;
     gap: 6px;
-  }
-  .network-select {
-    font-size: 12px;
   }
   .button {
     font-size: 12px;
@@ -2691,4 +2654,14 @@ ul.doc-list {
 main > .home-intro:first-child,
 main > .page-heading:first-child {
   margin-top: 0;
+}
+
+.header-sui-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.header-sui-logo .token-icon {
+  width: 30px;
+  height: 30px;
 }

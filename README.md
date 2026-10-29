@@ -26,7 +26,7 @@ Requires Node.js 22. The supplied Devnet deployment and publicly verified shared
 
 1. 导入此 GitHub 仓库，根目录为仓库根。
 2. Framework Preset: **Vite**；Install: **npm ci**；Build: **npm run build**；Output: **dist**；Node: **22.x**。
-3. 根据 `.env.example` 配置公开环境变量。默认网络为 Devnet；Mainnet/Testnet 不会复用 Devnet 对象。
+3. 在 `src/config/network.json` 设置网站网络：`devnet`、`testnet` 或 `mainnet`，当前为 `devnet`。提交 GitHub 并重新部署后生效；前端不提供网络切换，旧的 `VITE_NETWORK` 环境变量不再决定网站网络。根据 `.env.example` 配置对应网络的公开合约地址及 RPC；Mainnet/Testnet 不会复用 Devnet 对象。
 4. `vercel.json` 已配置 SPA 路由回退。
 5. 发布前按下方步骤部署持久索引。Vercel 静态前端不负责运行常驻索引进程。
 

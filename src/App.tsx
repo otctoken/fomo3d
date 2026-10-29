@@ -2,12 +2,12 @@ import { Logo } from "./components/Logo";
 import { useState } from "react";
 import { NavLink, Link, Route, Routes } from "react-router-dom";
 import { ConnectButton } from "@mysten/dapp-kit-react/ui";
-import { useCurrentNetwork, useDAppKit } from "@mysten/dapp-kit-react";
+import { useCurrentNetwork } from "@mysten/dapp-kit-react";
 import { Flame, Menu, X, Globe, ArrowUpRight, Github } from "lucide-react";
 import { useOwned } from "./hooks/useProtocol";
 import { useI18n } from "./components/I18n";
-import { DataHealth, PageTitle } from "./components/Common";
-import { config, explorer, networks, type Network } from "./config/contracts";
+import { DataHealth, PageTitle, TokenIcon } from "./components/Common";
+import { config, explorer, SUI } from "./config/contracts";
 import { short } from "./lib/sui/math";
 import { Home } from "./pages/Home";
 import { Ico } from "./pages/Ico";
@@ -19,28 +19,14 @@ import { Account } from "./pages/Account";
 import { Leaderboard } from "./pages/Leaderboard";
 import { Admin } from "./pages/Admin";
 import { Docs } from "./pages/Docs";
-import { useTransaction } from "./components/Transactions";
 export default function App() {
   const { t, toggle, lang } = useI18n(),
     network = useCurrentNetwork(),
-    kit = useDAppKit(),
     owned = useOwned(true),
     [menu, setMenu] = useState(false);
   const c = config(network);
-  const { busy } = useTransaction();
   return (
     <div className="app">
-      <div className="network-banner">
-        {network === "mainnet"
-          ? t(
-              "Real funds · Understand the game before participating",
-              "真实资金 · 参与前请了解规则",
-            )
-          : t(
-              `${network.toUpperCase()} NETWORK · Experimental deployment · Tokens have no guaranteed value`,
-              `${network.toUpperCase()} 网络 · 实验性部署 · 代币价值无保证`,
-            )}
-      </div>
       <header className="site-header">
         <Link to="/" className="brand">
           <Logo />
@@ -75,17 +61,14 @@ export default function App() {
             <Globe size={16} />
             <span>{lang === "en" ? "EN" : "中文"}</span>
           </button>
-          <select
-            className="network-select"
-            aria-label="Network"
-            disabled={busy}
-            value={network}
-            onChange={(e) => kit.switchNetwork(e.target.value as Network)}
+          <span
+            className="header-sui-logo"
+            role="img"
+            aria-label="Sui"
+            title="Sui"
           >
-            {networks.map((n) => (
-              <option key={n}>{n}</option>
-            ))}
-          </select>
+            <TokenIcon type={SUI} />
+          </span>
           <ConnectButton>{t("Connect Wallet", "连接钱包")}</ConnectButton>
           <button
             className="icon-button mobile-menu"

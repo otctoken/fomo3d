@@ -1,14 +1,17 @@
 import { normalizeSuiAddress, normalizeStructTag } from "@mysten/sui/utils";
 import { devnetDeployment } from "./deployment";
+import networkSettings from "./network.json";
 export const networks = ["devnet", "testnet", "mainnet"] as const;
 export type Network = (typeof networks)[number];
 export const SUI = normalizeStructTag("0x2::sui::SUI");
 export const CLOCK = "0x6";
 export const ICO_CAP = 11_000_000_000_000n;
 const env = import.meta.env;
-export const defaultNetwork: Network = networks.includes(env.VITE_NETWORK)
-  ? env.VITE_NETWORK
-  : "devnet";
+if (!networks.includes(networkSettings.network as Network))
+  throw new Error(
+    "src/config/network.json: network must be devnet, testnet or mainnet",
+  );
+export const defaultNetwork = networkSettings.network as Network;
 export type ObjectIds = Partial<
   Record<
     | "registry"
