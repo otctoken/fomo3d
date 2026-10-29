@@ -138,7 +138,7 @@ export function Ico({ compact = false }: { compact?: boolean }) {
                 disabled={!account || tx.busy || !p.ids.mainGame}
                 onClick={request}
               >
-                {t("Review contribution", "检查认购")}
+                {t("Subscribe", "申请认购")}
               </button>
             </>
           )}
@@ -164,7 +164,7 @@ export function Ico({ compact = false }: { compact?: boolean }) {
                 })
               }
             >
-              {t("Refund contribution", "退还认购")}
+              {t("Request Refund", "退还认购")}
             </button>
           ) : (
             <button
