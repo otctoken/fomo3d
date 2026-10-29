@@ -222,19 +222,6 @@ main {
   padding: 22px 40px 70px;
   min-height: 70vh;
 }
-.data-health {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 10px;
-  color: #697587;
-  letter-spacing: 0.2px;
-  margin-bottom: 34px;
-  flex-wrap: wrap;
-}
-.health-history {
-  margin-left: auto;
-}
 .dot {
   display: inline-block;
   width: 5px;
@@ -1579,15 +1566,6 @@ td {
   .language {
     padding: 4px;
   }
-  .health-history {
-    margin-left: 0;
-    width: 100%;
-    padding-left: 12px;
-  }
-  .data-health {
-    margin-bottom: 25px;
-    line-height: 1.5;
-  }
   .home-intro {
     margin: 22px 0 28px;
     align-items: start;
@@ -2313,9 +2291,6 @@ ul.doc-list {
 .hero-description {
   font-size: 12px;
 }
-.data-health {
-  font-size: 11px;
-}
 .stat > span {
   font-size: 10px;
 }
@@ -2446,9 +2421,6 @@ ul.doc-list {
   input,
   select {
     font-size: 16px;
-  }
-  .data-health {
-    font-size: 10px;
   }
   .game-card .small-code {
     font-size: 10px;
@@ -2655,4 +2627,10 @@ ul.doc-list {
   .event-icon {
     padding: 7px;
   }
+}
+
+/* Without a notice, use the main container's padding without an extra title gap. */
+main > .home-intro:first-child,
+main > .page-heading:first-child {
+  margin-top: 0;
 }

@@ -89,6 +89,8 @@ export function Field({
 export function DataHealth() {
   const p = useProtocol(),
     { t } = useI18n();
+  if (p.config.packageId && !p.error && !(p.historyEnabled && p.history.error))
+    return null;
   return (
     <>
       {!p.config.packageId && (
