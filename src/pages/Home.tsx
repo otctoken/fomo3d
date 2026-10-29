@@ -31,7 +31,7 @@ export function Home() {
         <div>
           <p className="eyebrow">
             <span className="dot" />
-            {t("THE ON-CHAIN ENDGAME", "链上终局游戏")}
+            {t("THE ON-CHAIN ENDGAME ON SUI", "SuiNetwork链上终局游戏")}
           </p>
           <h1>
             {t("One more key.", "再买一把 Key。")}
