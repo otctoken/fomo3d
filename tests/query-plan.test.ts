@@ -22,6 +22,19 @@ const catalog: Catalog = {
 };
 
 describe("page-specific RPC scope with a large directory", () => {
+  it("reads ICO state on create without loading games, pools or unrelated objects", () => {
+    const plan = pagePlan("/create", "", catalog);
+    expect(plan.ico).toBe(true);
+    expect(plan.games).toEqual([]);
+    expect(plan.pools).toEqual([]);
+    expect([
+      plan.registry,
+      plan.claims,
+      plan.minter,
+      plan.halving,
+      plan.clock,
+    ]).toEqual([false, false, false, false, false]);
+  });
   it("defaults Swap to a community pool and loads only the explicitly selected pool", () => {
     expect(pagePlan("/swap", "", catalog).pools.map((p) => p.id)).toEqual([
       "pool-0",

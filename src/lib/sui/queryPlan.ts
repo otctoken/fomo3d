@@ -104,7 +104,11 @@ export function pagePlan(
     detail,
     clock: games.length > 0,
     registry: home || detail || ico || (path === "/admin" && !!address),
-    ico: home || ico || (detail && games.some((g) => g.coinType === SUI)),
+    ico:
+      home ||
+      ico ||
+      path === "/create" ||
+      (detail && games.some((g) => g.coinType === SUI)),
     claims: !!address && (ico || account),
     minter: home || token || suiDetail,
     halving: token || path === "/docs" || suiDetail,

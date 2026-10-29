@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentAccount } from "@mysten/dapp-kit-react";
 import { normalizeStructTag } from "@mysten/sui/utils";
-import { useMetadata } from "../hooks/useProtocol";
+import { useMetadata, useProtocol } from "../hooks/useProtocol";
 import { useI18n } from "../components/I18n";
 import { useTransaction } from "../components/Transactions";
 import { PageTitle, Field, Balance } from "../components/Common";
@@ -12,6 +12,7 @@ import { eventSchemas } from "../lib/events/schemas";
 import { SUI } from "../config/contracts";
 export function CreateGame() {
   const { t } = useI18n(),
+    p = useProtocol(),
     tx = useTransaction(),
     account = useCurrentAccount(),
     navigate = useNavigate();
@@ -80,12 +81,14 @@ export function CreateGame() {
           "通过一笔钱包交易创建游戏与 Token/SUI 流动性池。",
         )}
       />
-      <div className="notice">
-        {t(
-          "Games can only be created after the Genesis ICO is complete.",
-          "在创世ICO完成后方可创建游戏",
-        )}
-      </div>
+      {p.data.ico?.boo === true && (
+        <div className="notice">
+          {t(
+            "Games can only be created after the Genesis ICO is complete.",
+            "在创世ICO完成后方可创建游戏",
+          )}
+        </div>
+      )}
       <div className="form-layout">
         <section className="panel">
           <Field label="Coin Type" hint="0x…::module::TOKEN">
