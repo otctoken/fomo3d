@@ -122,40 +122,6 @@ export function DataHealth() {
           </button>
         </div>
       )}
-      <div className="data-health">
-        <span
-          className={
-            !p.isLoading && !p.error && !(p.historyEnabled && p.history.error)
-              ? "dot"
-              : "dot amber"
-          }
-        />
-        {!p.syncActive
-          ? t("No live polling needed on this page", "当前页面无需链上轮询")
-          : p.isLoading
-            ? t("Reading Sui…", "正在读取 Sui…")
-            : p.data
-              ? t(
-                  "On-chain state · page-specific sync",
-                  "链上状态 · 按当前页面同步",
-                )
-              : t("Awaiting chain data", "等待链上数据")}
-        {p.historyEnabled && (
-          <span className="health-history">
-            {p.history.data?.source === "persistent"
-              ? p.history.data.complete
-                ? t(
-                    "Persistent index · complete from initialization",
-                    "持久索引 · 从初始化完整同步",
-                  )
-                : t("Persistent index · backfilling", "持久索引 · 补全中")
-              : t(
-                  "Public RPC history · coverage not guaranteed",
-                  "公共 RPC 历史 · 不保证完整",
-                )}
-          </span>
-        )}
-      </div>
     </>
   );
 }
