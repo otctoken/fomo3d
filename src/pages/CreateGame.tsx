@@ -200,8 +200,8 @@ export function CreateGame() {
           <h3>{t("Seed the arena", "注入奖池与流动性")}</h3>
           <p>
             {t(
-              "65% winner, 30% next round, 2% buyback and 3% blackhole transfer. Pool ratios determine the initial AMM price.",
-              "65% 赢家、30% 下一轮、2% 回购、3% 黑洞转账。初始存入比例决定 AMM 价格。",
+              "65% winner, 30% next round, 2% buyback and 3% Burn. Pool ratios determine the initial AMM price.",
+              "65%赢家、30%下一轮、2%回购、3%销毁。初始存入比例决定 AMM 价格。",
             )}
           </p>
         </aside>
