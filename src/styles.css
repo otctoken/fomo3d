@@ -1128,6 +1128,9 @@ footer {
 .buy-panel {
   margin: 0;
 }
+.buy-panel .key-details .summary-row {
+  padding: 7px 0;
+}
 .accent {
   color: var(--gold);
 }

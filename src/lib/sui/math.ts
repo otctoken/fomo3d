@@ -37,6 +37,23 @@ export function formatAmount(
 export function keyPrice(keys: bigint, initial: bigint, pup: bigint) {
   return u64(initial + keys * ((initial * pup) / 1000n));
 }
+export function keyReward(
+  price: bigint,
+  supply: bigint,
+  burned: bigint,
+  threshold: bigint,
+  divisor: bigint,
+) {
+  const requested = price * 5000n;
+  const issued = supply + burned;
+  if (price < 0n || requested > U64_MAX || issued > U64_MAX || divisor <= 0n)
+    return undefined;
+  // coin.move applies at most one halving before minting, using lifetime issuance.
+  if (issued >= threshold && divisor <= 536_870_912n) divisor *= 2n;
+  if (issued >= 10_000_000_000_000_000_000n) return 0n;
+  // The contract checks the cap before minting; it does not clamp this reward.
+  return requested / divisor;
+}
 export function quote(
   amount: bigint,
   reserveIn: bigint,

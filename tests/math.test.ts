@@ -3,6 +3,7 @@ import {
   parseAmount,
   formatAmount,
   keyPrice,
+  keyReward,
   quote,
   minimum,
   liquidityQuote,
@@ -66,6 +67,40 @@ describe("Exact contract arithmetic", () => {
       fee: 100n,
       netY: 9900n,
     }));
+});
+describe("Next SUI key reward", () => {
+  const price = 2_000_000_000n;
+  const threshold = 2_500_000_000_000_000_000n;
+  const cap = 10_000_000_000_000_000_000n;
+  it("rewards 10,000 FOMO3D for the initial 2 SUI key", () => {
+    expect(keyReward(price, 0n, 0n, threshold, 1n)).toBe(10_000_000_000_000n);
+    expect(keyReward(keyPrice(1n, price, 2n), 0n, 0n, threshold, 1n)).toBe(
+      10_020_000_000_000n,
+    );
+  });
+  it("halves before minting at the threshold, counting burned tokens", () => {
+    expect(keyReward(price, threshold - 1n, 0n, threshold, 1n)).toBe(
+      price * 5000n,
+    );
+    expect(keyReward(price, threshold - 1n, 1n, threshold, 1n)).toBe(
+      price * 2500n,
+    );
+  });
+  it("only advances one halving per purchase and respects the maximum divisor", () => {
+    expect(keyReward(price, cap - 1n, 0n, threshold, 1n)).toBe(price * 2500n);
+    expect(keyReward(price, cap - 1n, 0n, threshold, 1_073_741_824n)).toBe(
+      (price * 5000n) / 1_073_741_824n,
+    );
+  });
+  it("stops at the lifetime cap, without clamping a reward that crosses it", () => {
+    expect(keyReward(price, cap - 1n, 0n, cap, 1n)).toBe(price * 5000n);
+    expect(keyReward(price, cap - 1n, 1n, cap, 1n)).toBe(0n);
+  });
+  it("does not display a reward for an overflowing Move multiplication", () => {
+    expect(
+      keyReward(U64_MAX / 5000n + 1n, 0n, 0n, threshold, 1n),
+    ).toBeUndefined();
+  });
 });
 describe("ICO lifecycle and chain Clock", () => {
   it("does not unlock from a full progress bar alone", () => {

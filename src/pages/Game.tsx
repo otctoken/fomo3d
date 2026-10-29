@@ -15,7 +15,13 @@ import { Activity } from "../components/Activity";
 import { useI18n } from "../components/I18n";
 import { useTransaction } from "../components/Transactions";
 import { SUI, explorer } from "../config/contracts";
-import { keyPrice, gameStatus, short } from "../lib/sui/math";
+import {
+  keyPrice,
+  keyReward,
+  formatAmount,
+  gameStatus,
+  short,
+} from "../lib/sui/math";
 import { buyKey, settle } from "../lib/transactions/builders";
 export function GamePage() {
   const { id } = useParams(),
@@ -81,6 +87,18 @@ export function GamePage() {
       BigInt(p.data?.clock?.timestamp_ms || 0),
     ),
     pool = p.catalog.pools.find((v) => v.coinType === game.coinType);
+  const minter = p.data?.minter,
+    halving = p.data?.halving;
+  const nextReward =
+    game.coinType === SUI && minter && halving
+      ? keyReward(
+          price,
+          BigInt(minter.cap.total_supply.value),
+          BigInt(minter.total_burned),
+          BigInt(halving.remaining),
+          BigInt(halving.halved),
+        )
+      : undefined;
   const events = p.history.data?.events || [],
     myKeys = events.filter(
       (e) =>
@@ -196,27 +214,35 @@ export function GamePage() {
             </strong>
           </div>
           <Balance type={game.coinType} />
-          <div className="summary-row">
-            <span>{t("Linear increment / key", "每把线性增加")}</span>
-            <strong>
-              <TokenAmount
-                amount={
-                  (BigInt(game.initial_price) *
-                    BigInt(game.price_update_percentage)) /
-                  1000n
-                }
-                type={game.coinType}
-                precision={9}
-              />
-            </strong>
-          </div>
-          <div className="summary-row">
-            <span>{t("Timer reset", "计时重置")}</span>
-            <strong>{BigInt(game.countdown) / 1000n + ""}s</strong>
-          </div>
-          <div className="summary-row">
-            <span>{t("Keys this round", "本轮已购 Key")}</span>
-            <strong>{game.total_keys}</strong>
+          <div className="key-details">
+            <div className="summary-row">
+              <span>{t("Linear increment / key", "每把线性增加")}</span>
+              <strong>
+                <TokenAmount
+                  amount={
+                    (BigInt(game.initial_price) *
+                      BigInt(game.price_update_percentage)) /
+                    1000n
+                  }
+                  type={game.coinType}
+                  precision={9}
+                />
+              </strong>
+            </div>
+            <div className="summary-row">
+              <span>{t("Timer reset", "计时重置")}</span>
+              <strong>{BigInt(game.countdown) / 1000n + ""}s</strong>
+            </div>
+            <div className="summary-row">
+              <span>{t("Keys this round", "本轮已购 Key")}</span>
+              <strong>{game.total_keys}</strong>
+            </div>
+            {game.coinType === SUI && (
+              <div className="summary-row">
+                <span>{t("Estimated key reward", "购买 Key 预计奖励")}</span>
+                <strong>{formatAmount(nextReward, 9, 9)} FOMO3D</strong>
+              </div>
+            )}
           </div>
           <button
             className="button primary full"

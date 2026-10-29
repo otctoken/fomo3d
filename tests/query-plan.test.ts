@@ -22,18 +22,19 @@ const catalog: Catalog = {
 };
 
 describe("page-specific RPC scope with a large directory", () => {
-  it("loads just the SUI game and its opening gates, with no pools or token supply reads", () => {
+  it("loads just the SUI game, opening gates and reward state, with no pools", () => {
     const p = pagePlan("/game/sui", "", catalog);
     expect(p.games.map((g) => g.id)).toEqual(["main"]);
     expect(p.pools).toEqual([]);
     expect([p.registry, p.ico, p.clock]).toEqual([true, true, true]);
-    expect([p.claims, p.minter, p.halving]).toEqual([false, false, false]);
+    expect([p.claims, p.minter, p.halving]).toEqual([false, true, true]);
   });
   it("isolates a community game's state and does not query the ICO", () => {
     const p = pagePlan("/game/game-231", "", catalog);
     expect(p.games.map((g) => g.id)).toEqual(["game-231"]);
     expect(p.pools).toEqual([]);
     expect(p.ico).toBe(false);
+    expect([p.minter, p.halving]).toEqual([false, false]);
   });
   it("limits home reads to the main game and the three displayed community cards", () => {
     const p = pagePlan("/", "", catalog);

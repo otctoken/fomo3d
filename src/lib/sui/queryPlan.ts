@@ -86,6 +86,7 @@ export function pagePlan(
       catalog.pools.find((p) => p.coinType.includes("::fomo3d::FOMO3D")) ||
       catalog.pools[0]
     : undefined;
+  const suiDetail = detail && games.some((g) => g.coinType === SUI);
   return {
     games,
     pools: selectedPool ? [selectedPool] : [],
@@ -97,8 +98,8 @@ export function pagePlan(
     registry: home || detail || ico || (path === "/admin" && !!address),
     ico: home || ico || (detail && games.some((g) => g.coinType === SUI)),
     claims: !!address && (ico || account),
-    minter: home || token,
-    halving: token || path === "/docs",
+    minter: home || token || suiDetail,
+    halving: token || path === "/docs" || suiDetail,
     history:
       !["/rules", "/docs"].includes(path) && (path !== "/account" || !!address),
     gameInterval: detail ? 3000 : 15000,
