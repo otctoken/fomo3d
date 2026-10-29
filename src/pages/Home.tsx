@@ -125,7 +125,7 @@ export function Home() {
             </span>
             <span>
               <i />
-              {t("5% Buyback", "5% 回购")}
+              {t("5% Buyback & Burn FOMO3D", "5% 回购销毁FOMO3D")}
             </span>
           </div>
         </section>
