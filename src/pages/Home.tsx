@@ -186,7 +186,7 @@ export function Home() {
             </div>
             <div>
               <h3>{t("Your token. Your game.", "你的代币，你的游戏。")}</h3>
-              <p>{t("Launch a new arena on Sui", "在 Sui 上创建专属游戏")}</p>
+              <p>{t("Build a game for your meme coin on Sui", "在SUI上为你的meme coin创建游戏")}</p>
             </div>
             <ArrowUpRight size={20} />
           </Link>
