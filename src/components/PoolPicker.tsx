@@ -18,7 +18,12 @@ export function PoolPicker() {
   const selectedVisible = matches.some((pool) => pool.id === selected?.id);
   function label(pool: (typeof p.catalog.pools)[number]) {
     const meta = names[pool.coinType];
-    return `${meta?.name || pool.coinType.split("::").at(-1)}${meta?.symbol && meta.symbol !== meta.name ? ` (${meta.symbol})` : ""} / SUI · ${short(pool.coinType.split("::")[0])} · ${short(pool.id)}`;
+    const name =
+      meta?.name || meta?.symbol || pool.coinType.split("::").at(-1) || "Token";
+    const characters = Array.from(name);
+    const compactName =
+      characters.length > 20 ? characters.slice(0, 20).join("") + "…" : name;
+    return `${compactName} / SUI · ${short(pool.id)}`;
   }
   return (
     <section className="panel pool-picker">

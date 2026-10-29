@@ -1233,22 +1233,47 @@ footer {
   max-width: 980px;
   margin: auto;
 }
+.pool-picker {
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
+  /* Keep native select intrinsic sizing inside the Swap-only panel on iOS. */
+  contain: inline-size;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 .pool-picker-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+  width: 100%;
+  min-width: 0;
 }
 .pool-picker-fields .field {
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
   margin: 0;
 }
 .pool-picker select {
-  width: 100%;
-  min-width: 0;
+  /* Derive width from the field, never from a long native option label. */
+  width: 0;
+  min-width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
+.pool-picker .field input,
+.pool-picker .field select {
+  font-size: 16px;
+}
 .pool-picker .pool-address {
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 0;
+  white-space: normal;
+  word-break: break-all;
   overflow-wrap: anywhere;
 }
 @media (max-width: 600px) {
