@@ -5,48 +5,45 @@ import { SUI } from "../src/config/contracts";
 describe("administrator-maintained token logo links", () => {
   it("matches full Coin Types regardless of address padding", () => {
     const registry = {
-      common: { "0x2::sui::SUI": "https://images.example/sui.svg" },
+      "0x2::sui::SUI": "https://images.example/sui.svg",
     };
-    expect(coinLogoUrl("devnet", SUI, registry)).toBe(
-      "https://images.example/sui.svg",
-    );
-    expect(coinLogoUrl("devnet", "0x3::sui::SUI", registry)).toBeUndefined();
+    expect(coinLogoUrl(SUI, registry)).toBe("https://images.example/sui.svg");
+    expect(coinLogoUrl("0x3::sui::SUI", registry)).toBeUndefined();
   });
-  it("does not leak one network's logo into another network", () => {
+  it("resolves the shared mapping without a network argument", () => {
     const registry = {
-      devnet: { "0x7::coin::COIN": "https://images.example/coin.png" },
+      "0x7::coin::COIN": "https://images.example/coin.png",
     };
-    expect(coinLogoUrl("devnet", "0x7::coin::COIN", registry)).toBeDefined();
-    expect(coinLogoUrl("mainnet", "0x7::coin::COIN", registry)).toBeUndefined();
-  });
-  it("lets network-specific entries override common ones", () => {
-    const registry = {
-      common: { "0x2::sui::SUI": "https://images.example/common.svg" },
-      testnet: { "0x2::sui::SUI": "https://images.example/test.svg" },
-    };
-    expect(coinLogoUrl("testnet", SUI, registry)).toBe(
-      "https://images.example/test.svg",
+    expect(coinLogoUrl("0x7::coin::COIN", registry)).toBe(
+      "https://images.example/coin.png",
     );
-    expect(coinLogoUrl("mainnet", SUI, registry)).toBe(
-      "https://images.example/common.svg",
+  });
+  it("allows different deployment addresses to share one logo URL", () => {
+    const registry = {
+      "0x7::coin::COIN": "https://images.example/shared.svg",
+      "0x8::coin::COIN": "https://images.example/shared.svg",
+    };
+    expect(coinLogoUrl("0x7::coin::COIN", registry)).toBe(
+      "https://images.example/shared.svg",
+    );
+    expect(coinLogoUrl("0x8::coin::COIN", registry)).toBe(
+      "https://images.example/shared.svg",
     );
   });
   it("invalid links and unknown coins resolve to the placeholder", () => {
-    expect(coinLogoUrl("devnet", "incomplete")).toBeUndefined();
-    expect(coinLogoUrl("devnet", "0x8::coin::COIN")).toBeUndefined();
+    expect(coinLogoUrl("incomplete")).toBeUndefined();
+    expect(coinLogoUrl("0x8::coin::COIN")).toBeUndefined();
     expect(
-      coinLogoUrl("devnet", SUI, {
-        common: { "0x2::sui::SUI": "data:image/png;base64,AAAA" },
+      coinLogoUrl(SUI, {
+        "0x2::sui::SUI": "data:image/png;base64,AAAA",
       }),
     ).toBeUndefined();
   });
   it("ignores malformed manual keys without breaking valid entries", () => {
     expect(
-      coinLogoUrl("devnet", SUI, {
-        common: {
-          invalid: "https://images.example/bad.png",
-          "0x2::sui::SUI": "https://images.example/sui.png",
-        },
+      coinLogoUrl(SUI, {
+        invalid: "https://images.example/bad.png",
+        "0x2::sui::SUI": "https://images.example/sui.png",
       }),
     ).toBe("https://images.example/sui.png");
   });
@@ -73,6 +70,6 @@ describe("administrator-maintained token logo links", () => {
     );
   });
   it("ships a configured SUI link", () => {
-    expect(coinLogoUrl("devnet", SUI)).toMatch(/^https:\/\//);
+    expect(coinLogoUrl(SUI)).toMatch(/^https:\/\//);
   });
 });

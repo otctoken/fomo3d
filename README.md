@@ -18,7 +18,7 @@ Requires Node.js 22. The supplied Devnet deployment and publicly verified shared
 
 ## 代币 Logo 链接
 
-管理员在 `src/config/coin-logos.json` 中维护代币图标，键为完整 Coin Type（`0x…::module::TOKEN`，不是仅包地址），值为图片的 HTTP/HTTPS URL。`common` 为跨网络通用映射，`devnet` / `testnet` / `mainnet` 为各网络独立映射，网络映射优先。已配置 SUI 和当前 Devnet FOMO3D 图标。
+管理员在 `src/config/coin-logos.json` 中维护代币图标，键为完整 Coin Type（`0x…::module::TOKEN`，不是仅包地址），值为图片的 HTTP/HTTPS URL。配置为扁平映射，不区分网络；同一 Coin Type 在所有网络使用同一个 Logo。已配置 SUI 和当前 FOMO3D 地址。如果不同网络部署的 Coin Type 不同，将各个完整 Coin Type 都映射到同一个 URL 即可。
 
 只保存链接，不提供上传功能。建议使用可公开访问的 HTTPS 图片直链。图片未配置、链接格式非法、加载失败或超过 10 秒未加载时显示默认 `◈` 占位符；图标读取不再请求 CoinMetadata。修改映射后提交并重新部署即可对所有访问者生效。创建游戏不收集 Logo URL，管理员事后登记新代币即可；本文件不会修改链上元数据。
 

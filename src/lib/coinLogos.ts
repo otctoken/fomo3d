@@ -1,8 +1,6 @@
 import { normalizeStructTag } from "@mysten/sui/utils";
 import registry from "../config/coin-logos.json";
-import type { Network } from "../config/contracts";
-
-type LogoRegistry = Partial<Record<Network | "common", Record<string, string>>>;
+type LogoRegistry = Record<string, string>;
 
 export function normalizeLogoUrl(value: string): string | undefined {
   const trimmed = value.trim();
@@ -18,7 +16,6 @@ export function normalizeLogoUrl(value: string): string | undefined {
 }
 
 export function coinLogoUrl(
-  network: Network,
   coinType: string,
   logos: LogoRegistry = registry,
 ): string | undefined {
@@ -28,15 +25,12 @@ export function coinLogoUrl(
   } catch {
     return undefined;
   }
-  // Network entries override common entries. Never match by ticker or package alone.
-  for (const section of [logos[network], logos.common]) {
-    for (const [type, url] of Object.entries(section || {})) {
-      try {
-        if (normalizeStructTag(type) === normalized)
-          return normalizeLogoUrl(url);
-      } catch {
-        /* An invalid manual entry must not break other token icons. */
-      }
+  // All networks share this map. Match the complete Coin Type, never just its ticker.
+  for (const [type, url] of Object.entries(logos)) {
+    try {
+      if (normalizeStructTag(type) === normalized) return normalizeLogoUrl(url);
+    } catch {
+      /* An invalid manual entry must not break other token icons. */
     }
   }
   return undefined;

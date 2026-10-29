@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useCurrentNetwork } from "@mysten/dapp-kit-react";
 import { coinLogoUrl } from "../lib/coinLogos";
 
 export function TokenIcon({
@@ -9,11 +8,8 @@ export function TokenIcon({
   type: string;
   size?: string;
 }) {
-  const network = useCurrentNetwork();
-  const url = coinLogoUrl(network, type);
-  return (
-    <LogoImage key={`${network}:${type}:${url || ""}`} url={url} size={size} />
-  );
+  const url = coinLogoUrl(type);
+  return <LogoImage key={`${type}:${url || ""}`} url={url} size={size} />;
 }
 
 function LogoImage({ url, size }: { url?: string; size: string }) {
