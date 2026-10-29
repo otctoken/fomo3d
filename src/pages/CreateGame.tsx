@@ -80,6 +80,12 @@ export function CreateGame() {
           "通过一笔钱包交易创建游戏与 Token/SUI 流动性池。",
         )}
       />
+      <div className="notice">
+        {t(
+          "Games can only be created after the Genesis ICO is complete.",
+          "在创世ICO完成后方可创建游戏",
+        )}
+      </div>
       <div className="form-layout">
         <section className="panel">
           <Field label="Coin Type" hint="0x…::module::TOKEN">

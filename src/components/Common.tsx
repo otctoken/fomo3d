@@ -13,6 +13,8 @@ import { useI18n } from "./I18n";
 import { formatAmount, gameStatus, keyPrice, short } from "../lib/sui/math";
 import type { Game } from "../lib/sui/schemas";
 import { SUI } from "../config/contracts";
+import { TokenIcon } from "./TokenIcon";
+export { TokenIcon } from "./TokenIcon";
 export function PageTitle({
   eyebrow,
   title,
@@ -167,32 +169,6 @@ export function Countdown({
         </small>
       )}
     </div>
-  );
-}
-export function TokenIcon({
-  type,
-  size = "",
-}: {
-  type: string;
-  size?: string;
-}) {
-  const meta = useMetadata(type);
-  return (
-    <span className={"token-icon " + size}>
-      {meta.data?.iconUrl ? (
-        <img
-          src={meta.data.iconUrl}
-          alt=""
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
-        />
-      ) : type === SUI ? (
-        "◈"
-      ) : (
-        type.split("::").at(-1)?.slice(0, 1)
-      )}
-    </span>
   );
 }
 export function TokenAmount({

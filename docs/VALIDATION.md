@@ -34,3 +34,9 @@ SDK build emits a third-party annotation warning and a large initial bundle advi
 - ICO without a connected wallet read only Registry and ICO objects. Token/pool metadata and event-index queries are separate from these object-read counts.
 - Nine routes/tabs checked at a 390-pixel viewport: Games, Swap, Liquidity, Token, Claim, Account, Leaderboard, Admin guard and Docs; no horizontal overflow or captured console errors during the check.
 - Live main game was waiting for its first key. Deadline/extension and multi-pool selection scenarios were covered by regression tests, not a funded live-game or wallet transaction test.
+
+## 2026-10-29: token logo registry
+
+- Added 17 URL/registry tests; all 101 tests pass. Production build and TypeScript compilation pass.
+- Browser verified SUI's configured remote SVG loaded (natural width 400), then temporarily substituted a missing image URL: the image was removed and the original 36-pixel `◈` placeholder appeared. Restored the real URL and verified successful reload. The temporary URL is not part of the delivered configuration.
+- Create page shows “在创世ICO完成后方可创建游戏”. It has neither file-upload nor Logo URL input, per the user's revised request. Administrators maintain `src/config/coin-logos.json` and redeploy.

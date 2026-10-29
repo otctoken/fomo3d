@@ -16,6 +16,12 @@ Requires Node.js 22. The supplied Devnet deployment and publicly verified shared
 - 首次语言由浏览器首选语言决定：`zh`、简体、繁体、香港、台湾等中文语言显示简体中文，其余显示英文。手动选择会保存在当前设备。
 - Logo 是用户提供的原图：`public/fomo3d-logo.png`。
 
+## 代币 Logo 链接
+
+管理员在 `src/config/coin-logos.json` 中维护代币图标，键为完整 Coin Type（`0x…::module::TOKEN`，不是仅包地址），值为图片的 HTTP/HTTPS URL。`common` 为跨网络通用映射，`devnet` / `testnet` / `mainnet` 为各网络独立映射，网络映射优先。已配置 SUI 和当前 Devnet FOMO3D 图标。
+
+只保存链接，不提供上传功能。建议使用可公开访问的 HTTPS 图片直链。图片未配置、链接格式非法、加载失败或超过 10 秒未加载时显示默认 `◈` 占位符；图标读取不再请求 CoinMetadata。修改映射后提交并重新部署即可对所有访问者生效。创建游戏不收集 Logo URL，管理员事后登记新代币即可；本文件不会修改链上元数据。
+
 ## Vercel 手动部署
 
 1. 导入此 GitHub 仓库，根目录为仓库根。

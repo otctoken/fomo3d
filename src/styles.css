@@ -929,9 +929,14 @@ footer {
   position: relative;
 }
 .token-icon img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+}
+.token-icon img.token-logo-loading {
+  opacity: 0;
 }
 .card-pot {
   font-size: 27px;
