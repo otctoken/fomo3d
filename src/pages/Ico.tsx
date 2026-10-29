@@ -53,8 +53,8 @@ export function Ico({ compact = false }: { compact?: boolean }) {
           eyebrow="FOMO3D GENESIS"
           title={t("It starts with the community.", "从社区开始。")}
           description={t(
-            "Fund the first SUI arena. Claim your share of FOMO3D.",
-            "为首个 SUI 游戏注入资金，领取你的 FOMO3D。",
+            "Fund the first SUI game and claim your FOMO3D tokens once the raise is complete.",
+            "为首个SUI游戏注入资金，募集完成后可领取你的FOMO3D代币。",
           )}
         />
       )}
