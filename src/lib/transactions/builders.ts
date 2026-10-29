@@ -110,9 +110,10 @@ export async function buyKey(
   return tx;
 }
 export async function contribute(c: TxContext, amount: bigint) {
+  u64(amount);
   const ico = await read(c, id(c, "ico"), IcoSchema);
-  if (!ico.boo || amount <= 0n || amount > BigInt(ico.hardCap))
-    throw new Error("ICO is closed or amount exceeds the remaining allocation");
+  if (!ico.boo) throw new Error("ICO is closed");
+  if (amount <= 0n) throw new Error("Enter a positive contribution amount");
   await balance(c, SUI, amount);
   const tx = start(c);
   const change = tx.moveCall({

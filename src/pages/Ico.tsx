@@ -17,7 +17,11 @@ export function Ico({ compact = false }: { compact?: boolean }) {
     [amount, setAmount] = useState(""),
     [error, setError] = useState("");
   const ico = p.data?.ico;
-  const remaining = ico ? BigInt(ico.hardCap) : p.data?.icoFinalized?0n:undefined,
+  const remaining = ico
+      ? BigInt(ico.hardCap)
+      : p.data?.icoFinalized
+        ? 0n
+        : undefined,
     raised = remaining === undefined ? undefined : ICO_CAP - remaining;
   let input = 0n;
   try {
@@ -26,20 +30,22 @@ export function Ico({ compact = false }: { compact?: boolean }) {
     /* Input may be incomplete. */
   }
   const completed = p.data?.icoReady;
+  const accepted =
+    remaining === undefined ? undefined : input < remaining ? input : remaining;
   const request = () => {
     try {
       const value = parseAmount(amount);
-      if (value <= 0n || remaining === undefined || value > remaining)
+      if (value <= 0n)
         throw new Error(
           t(
-            "Enter an amount within the remaining allocation.",
-            "请输入剩余额度内的有效金额。",
+            "Enter a valid amount greater than zero.",
+            "请输入大于零的有效金额。",
           ),
         );
       setError("");
       tx.request({
         label: t("Contribute to ICO", "认购 ICO"),
-        details: `${formatAmount(value)} SUI → ${formatAmount(value * 200000n)} FOMO3D`,
+        details: `${formatAmount(value, 9, 9)} SUI · ${t("Estimated allocation", "预计获得")}: ${formatAmount(accepted === undefined ? undefined : accepted * 200000n, 9, 9)} FOMO3D. ${t("Any SUI above the remaining allocation is returned to your wallet by the contract.", "超出剩余额度的 SUI 将由合约退回钱包。")}`,
         build: (c) => contribute(c, value),
       });
     } catch (e) {
@@ -126,13 +132,26 @@ export function Ico({ compact = false }: { compact?: boolean }) {
                   inputMode="decimal"
                   placeholder="0.00"
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                    setError("");
+                  }}
                 />
               </Field>
               <div className="summary-row">
                 <span>{t("Expected FOMO3D", "预计获得 FOMO3D")}</span>
-                <strong>{formatAmount(input * 200000n)}</strong>
+                <strong>
+                  {formatAmount(
+                    accepted === undefined ? undefined : accepted * 200000n,
+                  )}
+                </strong>
               </div>
+              <p className="note">
+                {t(
+                  "Any SUI above the remaining allocation is returned to your wallet by the contract.",
+                  "超出剩余额度的 SUI 将由合约退回钱包。",
+                )}
+              </p>
               <button
                 className="button primary full"
                 disabled={!account || tx.busy || !p.ids.mainGame}

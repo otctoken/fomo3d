@@ -117,9 +117,46 @@ describe("PTBs built from real contract signatures", () => {
     expect(calls(tx)[0].arguments).toHaveLength(7);
     expect(tx.getData().commands.at(-1)?.$kind).toBe("TransferObjects");
   });
-  it("rejects contributions above the current remaining cap", async () => {
+  it("allows over-cap contributions and transfers contract change to the sender", async () => {
     const { c } = fixture();
-    await expect(contribute(c, 11000000000001n)).rejects.toThrow("remaining");
+    const tx = await contribute(c, 11000000000001n);
+    expect(calls(tx)[0].function).toBe("join_ico");
+    expect(tx.getData().sender).toBe(c.sender);
+    expect(tx.getData().commands.at(-1)?.TransferObjects?.objects).toEqual([
+      {
+        Result: tx
+          .getData()
+          .commands.findIndex(
+            (command) => command.MoveCall?.function === "join_ico",
+          ),
+        $kind: "Result",
+      },
+    ]);
+  });
+  it.each([0n, -1n, 1n << 64n])(
+    "rejects invalid ICO amount %s",
+    async (amount) => {
+      const { c } = fixture();
+      await expect(contribute(c, amount)).rejects.toThrow();
+    },
+  );
+  it("still requires enough balance for the full submitted amount", async () => {
+    const { c } = fixture();
+    vi.mocked(c.client.getBalance).mockResolvedValue({
+      balance: { balance: "11000000000000" },
+    } as Awaited<ReturnType<typeof c.client.getBalance>>);
+    await expect(contribute(c, 11000000000001n)).rejects.toThrow(
+      "Insufficient SUI",
+    );
+  });
+  it("still rejects contributions after the ICO closes", async () => {
+    const { c, objects } = fixture();
+    objects[c.ids.ico!] = IcoSchema.serialize({
+      id: c.ids.ico!,
+      hardCap: "0",
+      boo: false,
+    }).toBytes();
+    await expect(contribute(c, 1000000000n)).rejects.toThrow("ICO is closed");
   });
   it("returns refund coins; claim has no nonexistent return to transfer", async () => {
     const { c } = fixture();
