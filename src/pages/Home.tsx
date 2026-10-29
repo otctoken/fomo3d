@@ -195,7 +195,7 @@ export function Home() {
       <div className="stats-grid">
         <Stat
           label={t("GAMES DISCOVERED", "已发现游戏")}
-          value={p.data ? p.data.games.length : "—"}
+          value={p.history.data ? p.catalog.games.length : "—"}
           detail={t("From contract events", "来自合约事件")}
         />
         <Stat
@@ -213,7 +213,7 @@ export function Home() {
           value={
             p.data?.registry?.version === "1"
               ? t("Open", "已开放")
-              : p.data
+              : p.data?.registry
                 ? t("Genesis", "创世阶段")
                 : "—"
           }

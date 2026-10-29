@@ -54,7 +54,7 @@ export function Leaderboard() {
           onChange={(e) => setType(e.target.value)}
         >
           <option value={SUI}>SUI</option>
-          {p.data?.games
+          {p.catalog.games
             .filter((g) => g.coinType !== SUI)
             .map((g) => (
               <option key={g.id} value={g.coinType}>

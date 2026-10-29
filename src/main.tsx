@@ -8,6 +8,7 @@ import { I18nProvider } from "./components/I18n";
 import { TransactionProvider } from "./components/Transactions";
 import App from "./App";
 import "./styles.css";
+import { ProtocolProvider } from "./hooks/useProtocol";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 4000, refetchOnWindowFocus: true, retry: 1 },
@@ -19,9 +20,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <DAppKitProvider dAppKit={dAppKit}>
         <BrowserRouter>
           <I18nProvider>
-            <TransactionProvider>
-              <App />
-            </TransactionProvider>
+            <ProtocolProvider>
+              <TransactionProvider>
+                <App />
+              </TransactionProvider>
+            </ProtocolProvider>
           </I18nProvider>
         </BrowserRouter>
       </DAppKitProvider>

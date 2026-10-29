@@ -75,7 +75,10 @@ function mergeConfirmed(key: string, events: ChainEvent[]) {
   for (const e of confirmedEvents.get(key)?.values() || []) merged.set(e.id, e);
   return [...merged.values()];
 }
-export async function fetchHistory(network: Network): Promise<History> {
+export async function fetchHistory(
+  network: Network,
+  signal?: AbortSignal,
+): Promise<History> {
   const c = config(network);
   if (!c.packageId)
     return {
@@ -90,6 +93,7 @@ export async function fetchHistory(network: Network): Promise<History> {
     const db = createClient(c.supabaseUrl, c.supabaseKey);
     const events: ChainEvent[] = [];
     for (let offset = 0; ; offset += 1000) {
+      signal?.throwIfAborted();
       const { data, error } = await db
         .from("fomo_events")
         .select("*")
@@ -97,7 +101,8 @@ export async function fetchHistory(network: Network): Promise<History> {
         .eq("package_id", c.packageId)
         .order("checkpoint")
         .order("id")
-        .range(offset, offset + 999);
+        .range(offset, offset + 999)
+        .abortSignal(signal || AbortSignal.timeout(12000));
       if (error) throw error;
       for (const row of data || [])
         events.push(decodeEvent({ ...row.event, bcs: fromBase64(row.bcs) }));
@@ -107,7 +112,8 @@ export async function fetchHistory(network: Network): Promise<History> {
       .from("fomo_cursors")
       .select("*")
       .eq("network", network)
-      .eq("package_id", c.packageId);
+      .eq("package_id", c.packageId)
+      .abortSignal(signal || AbortSignal.timeout(12000));
     if (error) throw error;
     return {
       events: mergeConfirmed(key, events),
@@ -131,13 +137,17 @@ export async function fetchHistory(network: Network): Promise<History> {
   }
   for (const module of ["game", "fomo3d", "swap"]) {
     // Paginate scan-limited empty pages too; resume on the next poll after this work budget.
-    for (let page = 0; page < 20; page++) {
+    for (let page = 0; page < 2; page++) {
+      signal?.throwIfAborted();
       const response = await client.listEvents({
         filter: { eventType: `${c.packageId}::${module}` },
         after: cache.cursors[module],
         limit: 50,
-        signal: AbortSignal.timeout(12000),
+        signal: signal
+          ? AbortSignal.any([signal, AbortSignal.timeout(12000)])
+          : AbortSignal.timeout(12000),
       });
+      signal?.throwIfAborted();
       for (const event of response.events) {
         const decoded = decodeEvent(event);
         cache.events.set(decoded.id, decoded);

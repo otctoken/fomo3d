@@ -8,7 +8,13 @@ import {
   useEntitlement,
 } from "../hooks/useProtocol";
 import { useI18n } from "../components/I18n";
-import { PageTitle, Stat, Empty, GameCard } from "../components/Common";
+import {
+  PageTitle,
+  Stat,
+  Empty,
+  GameCard,
+  GamePagination,
+} from "../components/Common";
 import { Activity } from "../components/Activity";
 import { SUI, explorer } from "../config/contracts";
 import { formatAmount, short } from "../lib/sui/math";
@@ -77,7 +83,8 @@ export function Account() {
                 <GameCard key={g.id} game={g} />
               ))}
           </div>
-          {!p.data?.games.some((g) => g.creator === account.address) && (
+          <GamePagination />
+          {!p.isLoading && !p.plan.matchingGames && (
             <p className="muted">
               {t(
                 "No created games in the available index.",

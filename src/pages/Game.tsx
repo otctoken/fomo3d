@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useCurrentAccount } from "@mysten/dapp-kit-react";
 import { KeyRound, ArrowLeft, Trophy } from "lucide-react";
-import { useProtocol, useMetadata } from "../hooks/useProtocol";
+import { useProtocol, useMetadata, useChainTime } from "../hooks/useProtocol";
 import {
   PageTitle,
   Empty,
@@ -20,6 +20,7 @@ import { buyKey, settle } from "../lib/transactions/builders";
 export function GamePage() {
   const { id } = useParams(),
     p = useProtocol(),
+    chainTime = useChainTime(),
     { t } = useI18n(),
     tx = useTransaction(),
     account = useCurrentAccount();
@@ -79,7 +80,7 @@ export function GamePage() {
       BigInt(game.maturity),
       BigInt(p.data?.clock?.timestamp_ms || 0),
     ),
-    pool = p.data?.pools.find((v) => v.coinType === game.coinType);
+    pool = p.catalog.pools.find((v) => v.coinType === game.coinType);
   const events = p.history.data?.events || [],
     myKeys = events.filter(
       (e) =>
@@ -222,6 +223,7 @@ export function GamePage() {
             disabled={
               !account ||
               tx.busy ||
+              chainTime.stale ||
               p.data?.registry?.version !== "1" ||
               (game.coinType === SUI && !p.data?.icoReady) ||
               !!p.error

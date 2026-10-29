@@ -24,7 +24,7 @@ export default function App() {
   const { t, toggle, lang } = useI18n(),
     network = useCurrentNetwork(),
     kit = useDAppKit(),
-    owned = useOwned(),
+    owned = useOwned(true),
     [menu, setMenu] = useState(false);
   const c = config(network);
   const { busy } = useTransaction();

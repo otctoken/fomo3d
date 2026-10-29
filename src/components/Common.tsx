@@ -1,7 +1,14 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { type ReactNode } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Clock3, KeyRound, Info, RefreshCw } from "lucide-react";
-import { useProtocol, useMetadata, useBalance } from "../hooks/useProtocol";
+import {
+  useProtocol,
+  useMetadata,
+  useBalance,
+  useChainTime,
+  useDeadlineCheck,
+} from "../hooks/useProtocol";
+import { countdownSeconds } from "../lib/sui/clock";
 import { useI18n } from "./I18n";
 import { formatAmount, gameStatus, keyPrice, short } from "../lib/sui/math";
 import type { Game } from "../lib/sui/schemas";
@@ -93,7 +100,7 @@ export function DataHealth() {
           )}
         </div>
       )}
-      {(p.error || p.history.error) && (
+      {(p.error || (p.historyEnabled && p.history.error)) && (
         <div className="notice error">
           <Info size={18} />
           <span>
@@ -107,7 +114,7 @@ export function DataHealth() {
             className="icon-button"
             onClick={() => {
               void p.refetch();
-              void p.history.refetch();
+              if (p.historyEnabled) void p.history.refetch();
             }}
             aria-label="Retry"
           >
@@ -116,25 +123,38 @@ export function DataHealth() {
         </div>
       )}
       <div className="data-health">
-        <span className={p.data && !p.error ? "dot" : "dot amber"} />
-        {p.isLoading
-          ? t("Reading Sui…", "正在读取 Sui…")
-          : p.data
-            ? t("On-chain state · refreshes every 5s", "链上状态 · 每 5 秒刷新")
-            : t("Awaiting chain data", "等待链上数据")}
-        <span className="health-history">
-          {p.history.data?.source === "persistent"
-            ? p.history.data.complete
+        <span
+          className={
+            !p.isLoading && !p.error && !(p.historyEnabled && p.history.error)
+              ? "dot"
+              : "dot amber"
+          }
+        />
+        {!p.syncActive
+          ? t("No live polling needed on this page", "当前页面无需链上轮询")
+          : p.isLoading
+            ? t("Reading Sui…", "正在读取 Sui…")
+            : p.data
               ? t(
-                  "Persistent index · complete from initialization",
-                  "持久索引 · 从初始化完整同步",
+                  "On-chain state · page-specific sync",
+                  "链上状态 · 按当前页面同步",
                 )
-              : t("Persistent index · backfilling", "持久索引 · 补全中")
-            : t(
-                "Public RPC history · coverage not guaranteed",
-                "公共 RPC 历史 · 不保证完整",
-              )}
-        </span>
+              : t("Awaiting chain data", "等待链上数据")}
+        {p.historyEnabled && (
+          <span className="health-history">
+            {p.history.data?.source === "persistent"
+              ? p.history.data.complete
+                ? t(
+                    "Persistent index · complete from initialization",
+                    "持久索引 · 从初始化完整同步",
+                  )
+                : t("Persistent index · backfilling", "持久索引 · 补全中")
+              : t(
+                  "Public RPC history · coverage not guaranteed",
+                  "公共 RPC 历史 · 不保证完整",
+                )}
+          </span>
+        )}
       </div>
     </>
   );
@@ -148,11 +168,8 @@ export function Countdown({
 }) {
   const p = useProtocol(),
     { t } = useI18n(),
-    [tick, setTick] = useState(Date.now());
-  useEffect(() => {
-    const i = setInterval(() => setTick(Date.now()), 1000);
-    return () => clearInterval(i);
-  }, []);
+    time = useChainTime();
+  useDeadlineCheck(game, time.timestamp, time.stale);
   if (game.maturity === "0")
     return (
       <div className={large ? "countdown waiting" : "timer"}>
@@ -161,19 +178,26 @@ export function Countdown({
       </div>
     );
   if (!p.data?.clock) return <span>—</span>;
-  const age = Math.max(0, tick - p.data.receivedAt),
-    chain = BigInt(p.data.clock.timestamp_ms) + BigInt(Math.min(age, 15000));
-  const left =
-    BigInt(game.maturity) > chain ? BigInt(game.maturity) - chain : 0n;
-  const seconds = left / 1000n,
+  const seconds = countdownSeconds(game.maturity, time.timestamp),
     h = seconds / 3600n,
     m = (seconds % 3600n) / 60n,
     s = seconds % 60n;
   return (
     <div className={large ? "countdown" : "timer"}>
       <Clock3 size={large ? 22 : 14} />
-      {[h, m, s].map((n) => n.toString().padStart(2, "0")).join(" : ")}
-      {age > 15000 && <small>{t("Syncing", "同步中")}</small>}
+      {time.stale
+        ? t("Syncing…", "同步中…")
+        : [h, m, s].map((n) => n.toString().padStart(2, "0")).join(" : ")}
+      {!time.stale && seconds === 0n && (
+        <small>
+          {BigInt(p.data.clock.timestamp_ms) > BigInt(game.maturity)
+            ? t(
+                "Settlement subject to on-chain execution",
+                "结算以链上执行为准",
+              )
+            : t("Verifying end time…", "正在核验结束时间…")}
+        </small>
+      )}
     </div>
   );
 }
@@ -299,5 +323,39 @@ export function GameCard({ game }: { game: Game }) {
         <ArrowUpRight size={18} />
       </div>
     </Link>
+  );
+}
+
+export function GamePagination() {
+  const p = useProtocol(),
+    { t } = useI18n(),
+    [params, setParams] = useSearchParams();
+  if (p.plan.totalPages <= 1) return null;
+  const go = (page: number) => {
+    const next = new URLSearchParams(params);
+    next.set("page", String(page));
+    setParams(next);
+  };
+  return (
+    <div className="filter-bar" aria-label={t("Game pages", "游戏分页")}>
+      <button
+        className="button secondary"
+        disabled={p.plan.page <= 1}
+        onClick={() => go(p.plan.page - 1)}
+      >
+        {t("Previous", "上一页")}
+      </button>
+      <span>
+        {p.plan.page} / {p.plan.totalPages} · {p.plan.matchingGames}{" "}
+        {t("games", "个游戏")}
+      </span>
+      <button
+        className="button secondary"
+        disabled={p.plan.page >= p.plan.totalPages}
+        onClick={() => go(p.plan.page + 1)}
+      >
+        {t("Next", "下一页")}
+      </button>
+    </div>
   );
 }

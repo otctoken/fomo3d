@@ -158,18 +158,15 @@ function Market({ liquidity }: { liquidity: boolean }) {
     { t } = useI18n(),
     account = useCurrentAccount(),
     tx = useTransaction(),
-    owned = useOwned();
-  const [poolId, setPoolId] = useState(""),
-    [sell, setSell] = useState(false),
+    owned = useOwned(false, liquidity),
+    [params, setParams] = useSearchParams();
+  const [sell, setSell] = useState(false),
     [amount, setAmount] = useState(""),
     [amountY, setAmountY] = useState(""),
     [slippage, setSlippage] = useState("0.5"),
     [error, setError] = useState("");
-  const pools = p.data?.pools || [],
-    pool =
-      pools.find((v) => v.id === poolId) ||
-      pools.find((v) => v.coinType === p.config.fomoType) ||
-      pools[0];
+  const pools = p.catalog.pools,
+    pool = p.data?.pools[0];
   const meta = useMetadata(pool?.coinType || p.config.fomoType);
   let q: ReturnType<typeof quote> | undefined,
     lq: ReturnType<typeof liquidityQuote> | undefined,
@@ -233,11 +230,22 @@ function Market({ liquidity }: { liquidity: boolean }) {
     <>
       {!pool ? (
         <section className="panel">
-          <Empty title={t("No AMM pool discovered yet", "尚未发现 AMM 池")}>
-            {t(
-              "The FOMO/SUI pool is created by the successful ICO completion transaction. Community pools are created together with games.",
-              "FOMO/SUI 池在 ICO 达标交易中创建，社区池在创建游戏时一同建立。",
-            )}
+          <Empty
+            title={
+              p.plan.pools.length
+                ? t("Loading selected pool", "正在读取所选交易池")
+                : t("No AMM pool discovered yet", "尚未发现 AMM 池")
+            }
+          >
+            {p.plan.pools.length
+              ? t(
+                  "Waiting for current on-chain reserves.",
+                  "等待最新链上储备数据。",
+                )
+              : t(
+                  "The FOMO/SUI pool is created by the successful ICO completion transaction. Community pools are created together with games.",
+                  "FOMO/SUI 池在 ICO 达标交易中创建，社区池在创建游戏时一同建立。",
+                )}
           </Empty>
         </section>
       ) : (
@@ -255,7 +263,9 @@ function Market({ liquidity }: { liquidity: boolean }) {
               <select
                 value={pool.id}
                 onChange={(e) => {
-                  setPoolId(e.target.value);
+                  const next = new URLSearchParams(params);
+                  next.set("pool", e.target.value);
+                  setParams(next);
                   setAmount("");
                   setAmountY("");
                 }}

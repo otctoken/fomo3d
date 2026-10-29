@@ -7,7 +7,7 @@ import { adminInitialize } from "../lib/transactions/builders";
 import { parseAmount } from "../lib/sui/math";
 export function Admin() {
   const p = useProtocol(),
-    owned = useOwned(),
+    owned = useOwned(true),
     { t } = useI18n(),
     tx = useTransaction(),
     [mode, setMode] = useState("sui"),
@@ -65,7 +65,7 @@ export function Admin() {
         />
         <Stat
           label={t("Games discovered", "已发现游戏")}
-          value={p.data?.games.length ?? "—"}
+          value={p.catalog.games.length}
         />
       </div>
       <section className="panel narrow">

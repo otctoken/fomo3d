@@ -25,3 +25,12 @@ Date: 2026-10-27 (Asia/Singapore).
 - Public RPC retention is not permanent. Historical coverage is deliberately labeled partial without the production index.
 
 SDK build emits a third-party annotation warning and a large initial bundle advisory. Optional GraphQL and Supabase clients load in separate chunks. These are build advisories, not test failures.
+
+## 2026-10-29: scoped polling and countdown synchronization
+
+- Added 28 regression cases (84 tests total): 1,001-game/1,001-pool directory scope, selected pool changes, route/tab isolation, pagination/search, account filtering, clock midpoint compensation, delayed unrelated reads, wall-clock changes, stale/slow samples, positive fractional seconds, deadline extension and bounded fast polling.
+- TypeScript compilation and production build checked after the refactor.
+- Browser read-only verification against public Devnet: the main game read only Registry, ICO, Clock and the configured main game; Docs read only Halving_cycle on its 30-second interval; after navigating to Rules these object reads stopped. Temporary request logging was removed after verification.
+- ICO without a connected wallet read only Registry and ICO objects. Token/pool metadata and event-index queries are separate from these object-read counts.
+- Nine routes/tabs checked at a 390-pixel viewport: Games, Swap, Liquidity, Token, Claim, Account, Leaderboard, Admin guard and Docs; no horizontal overflow or captured console errors during the check.
+- Live main game was waiting for its first key. Deadline/extension and multi-pool selection scenarios were covered by regression tests, not a funded live-game or wallet transaction test.
