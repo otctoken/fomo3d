@@ -10,7 +10,12 @@ import {
 } from "../hooks/useProtocol";
 import { countdownSeconds } from "../lib/sui/clock";
 import { useI18n } from "./I18n";
-import { formatAmount, gameStatus, keyPrice, short } from "../lib/sui/math";
+import {
+  formatAmount,
+  gameStatus,
+  keyPrice,
+  holderAddress,
+} from "../lib/sui/math";
 import type { Game } from "../lib/sui/schemas";
 import { SUI } from "../config/contracts";
 import { TokenIcon } from "./TokenIcon";
@@ -262,7 +267,7 @@ export function GameCard({ game }: { game: Game }) {
       <div className="card-bottom">
         <span>
           {t("Last buyer", "最后购买者")}{" "}
-          {game.total_keys === "0" ? "—" : short(game.address1)}
+          {game.total_keys === "0" ? "—" : holderAddress(game.address1)}
         </span>
         <ArrowUpRight size={18} />
       </div>

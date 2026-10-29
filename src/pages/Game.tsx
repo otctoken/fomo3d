@@ -20,7 +20,7 @@ import {
   keyReward,
   formatAmount,
   gameStatus,
-  short,
+  holderAddress,
 } from "../lib/sui/math";
 import { buyKey, settle } from "../lib/transactions/builders";
 export function GamePage() {
@@ -157,7 +157,7 @@ export function GamePage() {
               target="_blank"
               rel="noreferrer"
             >
-              {game.total_keys === "0" ? "—" : short(game.address1)}
+              {game.total_keys === "0" ? "—" : holderAddress(game.address1)}
             </a>
           </div>
           <div
