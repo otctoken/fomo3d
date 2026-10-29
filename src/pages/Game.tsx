@@ -252,7 +252,7 @@ export function GamePage() {
             </div>
             {game.coinType === SUI && (
               <div className="summary-row">
-                <span>{t("Estimated key reward", "购买 Key 预计奖励")}</span>
+                <span>{t("Buy key reward", "购买Key奖励")}</span>
                 <strong>{formatAmount(nextReward, 9, 9)} FOMO3D</strong>
               </div>
             )}
