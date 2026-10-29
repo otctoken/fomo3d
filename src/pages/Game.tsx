@@ -160,7 +160,9 @@ export function GamePage() {
               {game.total_keys === "0" ? "—" : short(game.address1)}
             </a>
           </div>
-          <div className="stats-grid compact">
+          <div
+            className={`stats-grid compact${game.coinType === SUI ? " sui-payouts" : ""}`}
+          >
             <Stat
               label={t("Winner · 65%", "赢家 · 65%")}
               value={
@@ -192,6 +194,17 @@ export function GamePage() {
                 />
               }
             />
+            {game.coinType === SUI && (
+              <Stat
+                label={t("FOMO3D buyback & burn · 5%", "回购销毁 FOMO3D · 5%")}
+                value={
+                  <TokenAmount
+                    amount={(BigInt(game.balance) * 5n) / 100n}
+                    type={SUI}
+                  />
+                }
+              />
+            )}
           </div>
         </section>
         <section className="panel buy-panel">
