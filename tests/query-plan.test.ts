@@ -22,6 +22,31 @@ const catalog: Catalog = {
 };
 
 describe("page-specific RPC scope with a large directory", () => {
+  it("defaults Swap to a community pool and loads only the explicitly selected pool", () => {
+    expect(pagePlan("/swap", "", catalog).pools.map((p) => p.id)).toEqual([
+      "pool-0",
+    ]);
+    for (const tab of ["swap", "liquidity"]) {
+      const plan = pagePlan("/swap", `?tab=${tab}&pool=pool-881`, catalog);
+      expect(plan.pools.map((p) => p.id)).toEqual(["pool-881"]);
+      expect(plan.games).toEqual([]);
+      expect([
+        plan.ico,
+        plan.clock,
+        plan.minter,
+        plan.halving,
+        plan.claims,
+        plan.registry,
+      ]).toEqual([false, false, false, false, false, false]);
+    }
+    expect(
+      pagePlan("/swap", "?pool=missing", { games: [], pools: [] }).pools,
+    ).toEqual([]);
+    expect(
+      pagePlan("/swap", "", { games: [], pools: catalog.pools.slice(0, 1) })
+        .pools[0].id,
+    ).toBe("fomo-pool");
+  });
   it("loads just the SUI game, opening gates and reward state, with no pools", () => {
     const p = pagePlan("/game/sui", "", catalog);
     expect(p.games.map((g) => g.id)).toEqual(["main"]);

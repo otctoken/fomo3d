@@ -7,6 +7,7 @@ import {
   quote,
   minimum,
   liquidityQuote,
+  pairedLiquidityAmount,
   removalQuote,
   gameStatus,
   icoReady,
@@ -100,6 +101,43 @@ describe("Next SUI key reward", () => {
     expect(
       keyReward(U64_MAX / 5000n + 1n, 0n, 0n, threshold, 1n),
     ).toBeUndefined();
+  });
+});
+describe("Liquidity amount pairing", () => {
+  it("pairs either side using raw reserves, including different coin decimals", () => {
+    const tokens = parseAmount("12.5", 6),
+      tokenReserve = parseAmount("1000", 6),
+      suiReserve = parseAmount("50", 9);
+    expect(pairedLiquidityAmount(tokens, tokenReserve, suiReserve)).toBe(
+      parseAmount("0.625", 9),
+    );
+    expect(
+      pairedLiquidityAmount(parseAmount("0.625", 9), suiReserve, tokenReserve),
+    ).toBe(tokens);
+  });
+  it("rounds up by the smallest unit so the other side cannot underfund the ratio", () => {
+    expect(pairedLiquidityAmount(1n, 3n, 7n)).toBe(3n);
+    const q = liquidityQuote(
+      1n,
+      pairedLiquidityAmount(1n, 3n, 7n),
+      3n,
+      7n,
+      100n,
+    );
+    expect(q.shares).toBe(33n);
+    expect(q.usedX).toBeLessThanOrEqual(1n);
+    expect(q.usedY).toBeLessThanOrEqual(3n);
+  });
+  it("preserves precision above Number's safe range", () => {
+    expect(pairedLiquidityAmount(9_007_199_254_740_993n, 3n, 2n)).toBe(
+      6_004_799_503_160_662n,
+    );
+  });
+  it("handles zero inputs, rejects empty reserves and prevents u64 overflow", () => {
+    expect(pairedLiquidityAmount(0n, 3n, 7n)).toBe(0n);
+    expect(() => pairedLiquidityAmount(1n, 0n, 7n)).toThrow();
+    expect(() => pairedLiquidityAmount(1n, 7n, 0n)).toThrow();
+    expect(() => pairedLiquidityAmount(U64_MAX, 1n, 2n)).toThrow();
   });
 });
 describe("ICO lifecycle and chain Clock", () => {

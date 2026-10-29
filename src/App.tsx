@@ -14,7 +14,7 @@ import { Ico } from "./pages/Ico";
 import { Games } from "./pages/Games";
 import { GamePage } from "./pages/Game";
 import { CreateGame } from "./pages/CreateGame";
-import { Fomo } from "./pages/Fomo";
+import { Fomo, SwapPage } from "./pages/Fomo";
 import { Account } from "./pages/Account";
 import { Leaderboard } from "./pages/Leaderboard";
 import { Admin } from "./pages/Admin";
@@ -59,6 +59,7 @@ export default function App() {
           </NavLink>
           <NavLink to="/games">{t("All Games", "全部游戏")}</NavLink>
           <NavLink to="/fomo">FOMO3D</NavLink>
+          <NavLink to="/swap">Swap</NavLink>
           <NavLink to="/account">{t("My Account", "我的账户")}</NavLink>
           <NavLink to="/docs">{t("Docs", "文档")}</NavLink>
           {!!owned.data?.adminCaps.length && (
@@ -104,6 +105,7 @@ export default function App() {
           <Route path="/game/:id" element={<GamePage />} />
           <Route path="/create" element={<CreateGame />} />
           <Route path="/fomo" element={<Fomo />} />
+          <Route path="/swap" element={<SwapPage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/admin" element={<Admin />} />

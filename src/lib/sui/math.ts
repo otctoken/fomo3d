@@ -97,6 +97,16 @@ export function liquidityQuote(
     usedY: total ? ceil(shares * ry, total) : y,
   };
 }
+export function pairedLiquidityAmount(
+  amount: bigint,
+  reserveIn: bigint,
+  reserveOut: bigint,
+) {
+  u64(amount);
+  if (reserveIn <= 0n || reserveOut <= 0n)
+    throw new Error("Pool reserves must be positive");
+  return u64((amount * reserveOut + reserveIn - 1n) / reserveIn);
+}
 export function removalQuote(
   shares: bigint,
   total: bigint,

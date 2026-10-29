@@ -44,7 +44,8 @@ export function pagePlan(
   const tab = params.get("tab") || "swap";
   const home = path === "/";
   const detail = path.startsWith("/game/");
-  const market = path === "/fomo" && !["token", "claim"].includes(tab);
+  const market =
+    path === "/swap" || (path === "/fomo" && !["token", "claim"].includes(tab));
   const ico = path === "/ico" || (path === "/fomo" && tab === "claim");
   const account = path === "/account" && !!address;
   const token = path === "/fomo" && tab === "token";
@@ -83,6 +84,9 @@ export function pagePlan(
   }
   const selectedPool = market
     ? catalog.pools.find((p) => p.id === params.get("pool")) ||
+      (path === "/swap"
+        ? catalog.pools.find((p) => !p.coinType.endsWith("::fomo3d::FOMO3D"))
+        : undefined) ||
       catalog.pools.find((p) => p.coinType.includes("::fomo3d::FOMO3D")) ||
       catalog.pools[0]
     : undefined;

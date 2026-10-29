@@ -20,6 +20,7 @@ import {
   Empty,
 } from "../components/Common";
 import { Activity } from "../components/Activity";
+import { PoolPicker } from "../components/PoolPicker";
 import { Ico } from "./Ico";
 import {
   parseAmount,
@@ -27,6 +28,7 @@ import {
   quote,
   minimum,
   liquidityQuote,
+  pairedLiquidityAmount,
   removalQuote,
   short,
 } from "../lib/sui/math";
@@ -60,7 +62,11 @@ export function Fomo() {
           <button
             key={id}
             className={tab === id ? "active" : ""}
-            onClick={() => setParams({ tab: id })}
+            onClick={() => {
+              const next = new URLSearchParams(params);
+              next.set("tab", id);
+              setParams(next);
+            }}
           >
             {label}
           </button>
@@ -73,6 +79,42 @@ export function Fomo() {
       ) : (
         <Market liquidity={tab === "liquidity"} />
       )}
+    </>
+  );
+}
+export function SwapPage() {
+  const [params, setParams] = useSearchParams(),
+    { t } = useI18n();
+  const tab = params.get("tab") === "liquidity" ? "liquidity" : "swap";
+  return (
+    <>
+      <PageTitle
+        eyebrow="COMMUNITY MARKETS"
+        title={t("Swap community tokens.", "兑换社区代币。")}
+        description={t(
+          "Find a token pool, swap with SUI, or provide liquidity.",
+          "查找代币交易池，与 SUI 兑换或提供流动性。",
+        )}
+      />
+      <div className="tabs">
+        {[
+          ["swap", t("Swap", "兑换")],
+          ["liquidity", t("Liquidity", "流动性")],
+        ].map(([id, label]) => (
+          <button
+            key={id}
+            className={tab === id ? "active" : ""}
+            onClick={() => {
+              const next = new URLSearchParams(params);
+              next.set("tab", id);
+              setParams(next);
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <Market liquidity={tab === "liquidity"} />
     </>
   );
 }
@@ -154,20 +196,42 @@ function TokenOverview() {
   );
 }
 function Market({ liquidity }: { liquidity: boolean }) {
+  const p = useProtocol();
+  return (
+    <>
+      <PoolPicker key={p.config.network} />
+      <MarketForm
+        key={`${p.config.network}:${p.plan.pools[0]?.id}:${liquidity}`}
+        liquidity={liquidity}
+      />
+    </>
+  );
+}
+function MarketForm({ liquidity }: { liquidity: boolean }) {
   const p = useProtocol(),
     { t } = useI18n(),
     account = useCurrentAccount(),
     tx = useTransaction(),
-    owned = useOwned(false, liquidity),
-    [params, setParams] = useSearchParams();
+    owned = useOwned(false, liquidity);
   const [sell, setSell] = useState(false),
     [amount, setAmount] = useState(""),
     [amountY, setAmountY] = useState(""),
+    [editedSide, setEditedSide] = useState<"x" | "y">("x"),
     [slippage, setSlippage] = useState("0.5"),
     [error, setError] = useState("");
-  const pools = p.catalog.pools,
-    pool = p.data?.pools[0];
+  const pool = p.data?.pools[0];
   const meta = useMetadata(pool?.coinType || p.config.fomoType);
+  const autoPair =
+    !!pool &&
+    BigInt(pool.total_shares) > 0n &&
+    BigInt(pool.reserve_x) > 0n &&
+    BigInt(pool.reserve_y) > 0n;
+  let displayX = amount,
+    displayY = amountY;
+  if (liquidity && autoPair) {
+    if (editedSide === "x") displayY = "";
+    else displayX = "";
+  }
   let q: ReturnType<typeof quote> | undefined,
     lq: ReturnType<typeof liquidityQuote> | undefined,
     x = 0n,
@@ -177,10 +241,37 @@ function Market({ liquidity }: { liquidity: boolean }) {
   try {
     bps = parseAmount(slippage, 2);
     minimum(1n, bps);
-    if (pool && meta.data && amount) {
-      x = parseAmount(amount, liquidity || sell ? meta.data.decimals : 9);
-      if (liquidity) {
-        y = parseAmount(amountY);
+    if (pool && meta.data && liquidity) {
+      if (autoPair) {
+        const source = editedSide === "x" ? amount : amountY;
+        if (source) {
+          if (editedSide === "x") {
+            x = parseAmount(source, meta.data.decimals);
+            y = pairedLiquidityAmount(
+              x,
+              BigInt(pool.reserve_x),
+              BigInt(pool.reserve_y),
+            );
+            displayY = formatAmount(y, 9, 9).replaceAll(",", "");
+          } else {
+            y = parseAmount(source, 9);
+            x = pairedLiquidityAmount(
+              y,
+              BigInt(pool.reserve_y),
+              BigInt(pool.reserve_x),
+            );
+            displayX = formatAmount(
+              x,
+              meta.data.decimals,
+              meta.data.decimals,
+            ).replaceAll(",", "");
+          }
+        }
+      } else if (amount && amountY) {
+        x = parseAmount(amount, meta.data.decimals);
+        y = parseAmount(amountY, 9);
+      }
+      if (x > 0n && y > 0n) {
         lq = liquidityQuote(
           x,
           y,
@@ -188,13 +279,22 @@ function Market({ liquidity }: { liquidity: boolean }) {
           BigInt(pool.reserve_y),
           BigInt(pool.total_shares),
         );
-      } else
-        q = quote(
-          x,
-          BigInt(sell ? pool.reserve_x : pool.reserve_y),
-          BigInt(sell ? pool.reserve_y : pool.reserve_x),
-          sell,
-        );
+        if (lq.shares === 0n)
+          throw new Error(
+            t(
+              "Amount is too small to mint LP shares.",
+              "金额过小，无法获得 LP 份额。",
+            ),
+          );
+      }
+    } else if (pool && meta.data && amount) {
+      x = parseAmount(amount, liquidity || sell ? meta.data.decimals : 9);
+      q = quote(
+        x,
+        BigInt(sell ? pool.reserve_x : pool.reserve_y),
+        BigInt(sell ? pool.reserve_y : pool.reserve_x),
+        sell,
+      );
     }
   } catch (e) {
     validation = String(e);
@@ -259,24 +359,6 @@ function Market({ liquidity }: { liquidity: boolean }) {
               </h2>
               <ArrowDownUp size={20} />
             </div>
-            <Field label={t("Pool", "交易池")}>
-              <select
-                value={pool.id}
-                onChange={(e) => {
-                  const next = new URLSearchParams(params);
-                  next.set("pool", e.target.value);
-                  setParams(next);
-                  setAmount("");
-                  setAmountY("");
-                }}
-              >
-                {pools.map((v) => (
-                  <option key={v.id} value={v.id}>
-                    {v.coinType.split("::").at(-1)} / SUI · {short(v.id)}
-                  </option>
-                ))}
-              </select>
-            </Field>
             {!liquidity && (
               <div className="segmented">
                 <button
@@ -306,8 +388,12 @@ function Market({ liquidity }: { liquidity: boolean }) {
               <input
                 aria-label="Amount"
                 inputMode="decimal"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                value={displayX}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                  setEditedSide("x");
+                  setError("");
+                }}
                 placeholder="0.0"
               />
               <Balance type={liquidity ? pool.coinType : inputType!} />
@@ -318,8 +404,12 @@ function Market({ liquidity }: { liquidity: boolean }) {
                 <input
                   aria-label="SUI liquidity"
                   inputMode="decimal"
-                  value={amountY}
-                  onChange={(e) => setAmountY(e.target.value)}
+                  value={displayY}
+                  onChange={(e) => {
+                    setAmountY(e.target.value);
+                    setEditedSide("y");
+                    setError("");
+                  }}
                   placeholder="0.0"
                 />
                 <Balance type={SUI} />
@@ -332,6 +422,19 @@ function Market({ liquidity }: { liquidity: boolean }) {
                 </strong>
                 <Balance type={outputType!} />
               </div>
+            )}
+            {liquidity && (
+              <p className="note">
+                {autoPair
+                  ? t(
+                      "Enter either token amount; the other follows the current pool ratio, rounded up to the smallest unit.",
+                      "输入任一代币数量，另一项按当前池比例自动计算，并向上取整到最小单位。",
+                    )
+                  : t(
+                      "This pool has no active liquidity ratio. Enter both amounts to set the initial ratio.",
+                      "此池暂无有效流动性比例，请输入两种代币数量设定初始比例。",
+                    )}
+              </p>
             )}
             <Field label={t("Slippage tolerance · %", "滑点容忍度 · %")}>
               <input
@@ -510,16 +613,21 @@ function Market({ liquidity }: { liquidity: boolean }) {
           </aside>
         </div>
       )}
-      <Activity
-        names={
-          liquidity ? ["LiquidityAdded", "LiquidityRemoved"] : ["SwapExecuted"]
-        }
-        title={
-          liquidity
-            ? t("Liquidity history", "流动性历史")
-            : t("Swap history", "兑换历史")
-        }
-      />
+      {pool && (
+        <Activity
+          poolId={pool.id}
+          names={
+            liquidity
+              ? ["LiquidityAdded", "LiquidityRemoved"]
+              : ["SwapExecuted"]
+          }
+          title={
+            liquidity
+              ? t("Liquidity history", "流动性历史")
+              : t("Swap history", "兑换历史")
+          }
+        />
+      )}
     </>
   );
 }

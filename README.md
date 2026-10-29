@@ -65,6 +65,7 @@ Requires Node.js 22. The supplied Devnet deployment and publicly verified shared
 | `/games`                 | 事件发现的游戏列表，搜索、状态、同币种奖池排序              |
 | `/create`                | 创建普通代币游戏及 AMM，合并/拆分 Coin，显示创建事件对象 ID |
 | `/fomo`                  | Swap、LP 添加/完整赎回、代币数据、ICO 领取                  |
+| `/swap`                  | 社区交易池选择、名称/符号/地址搜索、兑换与流动性            |
 | `/leaderboard`           | 分币种累计奖金、单次最大赢家、最近中奖                      |
 | `/account`               | 余额、entitlement、LP、已创建游戏、个人事件、设备交易记录   |
 | `/admin`                 | 持有有效 AdminCap 时可见，初始化主游戏或 FOMO 专用游戏      |
@@ -72,6 +73,10 @@ Requires Node.js 22. The supplied Devnet deployment and publicly verified shared
 | `/rules`                 | 风险与规则说明                                              |
 
 所有金额使用 bigint。每次操作新建 Transaction，SDK coin intents 负责 Coin/地址余额与 gas 解析；创建游戏的两笔 T 输入从同一合并 Coin 拆出。返回 Coin/LP 必须转给当前钱包。买 Key 对比最新精确价格，变化时要求重新报价；禁止自动重签。
+
+已有流动性的池支持双向金额联动：输入任一种代币数量，按当前原始储备比例计算另一项并向上取整到最小单位；储备刷新时自动重算。空池需要输入两种数量设定初始比例。切换池、网络或兑换/流动性标签会清空旧输入，切换标签保留所选池。交易仍经过最新状态检查及模拟。
+
+交易池搜索支持名称、符号、完整 coin type、代币包地址和池地址。名称元数据按网络缓存一小时、最多两个并发请求，不轮询全体池储备；名称读取失败时仍能按类型或地址搜索。目录来自当前可用的 PoolCreated 事件记录，历史覆盖受配置的索引源影响。
 
 提交顺序：新建 PTB → 构建和模拟 → 展示金额/Gas → 用户确认 → 再新建 PTB 并模拟 → 钱包签名执行 → 检查 FailedTransaction → waitForTransaction → 刷新链上状态。跨页面锁和执行锁避免重复点击提交；网络和账户变化要求重新检查。收到 digest 并不等于成功。
 

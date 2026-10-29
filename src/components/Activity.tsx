@@ -16,12 +16,14 @@ import { useI18n } from "./I18n";
 export function Activity({
   names,
   gameId,
+  poolId,
   mine = false,
   limit = 12,
   title,
 }: {
   names?: string[];
   gameId?: string;
+  poolId?: string;
   mine?: boolean;
   limit?: number;
   title?: string;
@@ -35,6 +37,7 @@ export function Activity({
       (e) =>
         (!names || names.includes(e.name)) &&
         (!gameId || e.data.game_id === gameId) &&
+        (!poolId || e.data.pool_id === poolId) &&
         (!mine ||
           (!!account && Object.values(e.data).includes(account.address))),
     )
