@@ -13,3 +13,9 @@ export const devnetDeployment = {
   poolRegistry:
     "0x1661dc77fabc491e1ce1c82381963caf17206552b541cacbf41c04c2a0fba70f",
 };
+export const mainnetDeployment = {
+  packageId: "0x你的主网合约包地址",
+  ids: {
+    mainGame: "0x你的主网FomoData对象地址",
+  },
+};
