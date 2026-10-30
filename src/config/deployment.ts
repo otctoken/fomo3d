@@ -14,8 +14,8 @@ export const devnetDeployment = {
     "0x1661dc77fabc491e1ce1c82381963caf17206552b541cacbf41c04c2a0fba70f",
 };
 export const mainnetDeployment = {
-  packageId: "0x你的主网合约包地址",
+  packageId: "0x045d628bb00e09b9dab5bc5fac68978ffd2b676e49805b1a3e190f4847eb9b89",
   ids: {
-    mainGame: "0x你的主网FomoData对象地址",
+    mainGame: "0x3e5002a5894f6df50772758c6ba000e454fd9a69a552eb94a970fdbd3056b8f1",
   },
 };
