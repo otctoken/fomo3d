@@ -1,5 +1,5 @@
 {
   "0x2::sui::SUI": "https://raw.githubusercontent.com/MystenLabs/sui-docs/main/sites/sui/static/img/logo.svg",
-  "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305::fomo3d::FOMO3D": "https://raw.githubusercontent.com/otctoken/fomo3d/main/public/fomo3d-logo.png",
+  "0x045d628bb00e09b9dab5bc5fac68978ffd2b676e49805b1a3e190f4847eb9b89::fomo3d::FOMO3D": "https://raw.githubusercontent.com/otctoken/fomo3d/main/public/fomo3d-logo.png",
   "0x066bc3351f0c2771bbdfa3cfc20bf1245e23c38951f12f376c4430b2ba77d8fd::fomo4d::FOMO4D":"https://node1.irys.xyz/Rp80fmqZS3qBDnfyxyKEvc65nVdTunjOG3NY8T6AjpI"
 }
