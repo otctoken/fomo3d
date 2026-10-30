@@ -44,7 +44,7 @@ export function config(network: Network) {
     : network === "mainnet"
       ? mainnetDeployment.packageId
       : "");
-  cconst ids: ObjectIds = env[prefix + "PACKAGE_ID"]
+  const ids: ObjectIds = env[prefix + "PACKAGE_ID"]
   ? {}
   : network === "devnet"
     ? { ...devnetDeployment }
