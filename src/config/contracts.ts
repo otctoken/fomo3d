@@ -1,5 +1,5 @@
 import { normalizeSuiAddress, normalizeStructTag } from "@mysten/sui/utils";
-import { devnetDeployment } from "./deployment";
+import { devnetDeployment, mainnetDeployment } from "./deployment";
 import networkSettings from "./network.json";
 export const networks = ["devnet", "testnet", "mainnet"] as const;
 export type Network = (typeof networks)[number];
@@ -38,13 +38,18 @@ const names = {
 export function config(network: Network) {
   const prefix = `VITE_${network.toUpperCase()}_`;
   const packageId =
-    env[prefix + "PACKAGE_ID"] ||
-    (network === "devnet"
-      ? "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305"
+      env[prefix + "PACKAGE_ID"] ||
+  (network === "devnet"
+    ? "0x0537376ee9476b19e487f7cd8a27538a3051bd240acbc751eb0410f771cc3305"
+    : network === "mainnet"
+      ? mainnetDeployment.packageId
       : "");
-  const ids: ObjectIds =
-    network === "devnet" && !env[prefix + "PACKAGE_ID"]
-      ? { ...devnetDeployment }
+  cconst ids: ObjectIds = env[prefix + "PACKAGE_ID"]
+  ? {}
+  : network === "devnet"
+    ? { ...devnetDeployment }
+    : network === "mainnet"
+      ? { ...mainnetDeployment.ids }
       : {};
   for (const [k, v] of Object.entries(names))
     if (env[prefix + v])
